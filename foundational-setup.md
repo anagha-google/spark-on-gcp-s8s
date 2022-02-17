@@ -398,7 +398,7 @@ gcloud dataproc clusters create $PERSISTENT_HISTORY_SERVER_NM \
 
 
 
-## 7.0. Create Dataproc Metastore Service
+## 7.0. Create common Dataproc Metastore Service
 
 Does not support BYO subnet-
 ```
