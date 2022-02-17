@@ -26,6 +26,7 @@ SPARK_GCE_CLUSTER_BUCKET=gs://$SPARK_GCE_CLUSTER_NM-$SVC_PROJECT_NBR
 SPARK_GKE_CLUSTER_BUCKET=gs://$SPARK_GKE_CLUSTER_NM-$SVC_PROJECT_NBR
 SPARK_SERVERLESS_BUCKET=gs://$SPARK_SERVERLESS_NM-$SVC_PROJECT_NBR
 
+
 PERSISTENT_HISTORY_SERVER_NM=$PROJECT_KEYWORD-sphs
 PERSISTENT_HISTORY_SERVER_BUCKET=gs://$PROJECT_KEYWORD-sphs-bucket
 
@@ -38,8 +39,9 @@ VPC_NM=$PROJECT_KEYWORD-vpc
 SPARK_GCE_CLUSTER_SUBNET=$SPARK_GCE_CLUSTER_NM-snet
 SPARK_GKE_CLUSTER_SUBNET=$SPARK_GKE_CLUSTER_NM-snet
 SPARK_SERVERLESS_SUBNET=$SPARK_SERVERLESS_NM-snet
+SPARK_CATCH_ALL_SUBNET=$PROJECT_KEYWORD-misc-snet
 
-ADMIN_PUB_IP=98.222.97.10/32
+OFFICE_CIDR=98.222.97.10/32
 ```
 
 
@@ -203,12 +205,12 @@ gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$
 ```
 gcloud iam service-accounts add-iam-policy-binding \
     ${SVC_PROJECT_UMSA_FQN} \
-    --member="user:${ADMIN_FQ_UPN}" \
+    --member="user:${ADMINISTRATOR_UPN_FQN}" \
     --role="roles/iam.serviceAccountUser"
     
 gcloud iam service-accounts add-iam-policy-binding \
     ${SVC_PROJECT_UMSA_FQN} \
-    --member="user:${ADMIN_FQ_UPN}" \
+    --member="user:${ADMINISTRATOR_UPN_FQN}" \
     --role="roles/iam.serviceAccountTokenCreator"
 ```
 
@@ -225,40 +227,105 @@ gcloud compute networks create $VPC_NM \
 --bgp-routing-mode=regional
 ```
 
-## 4.b. Create subnet for Dataproc - GCE
+## 4.b. Create subnet & firewall rules for Dataproc - GCE
 
 ```
+SPARK_GCE_CLUSTER_SUBNET_CIDR=10.0.0.0/16
+
 gcloud compute networks subnets create $SPARK_GCE_CLUSTER_SUBNET \
  --network $VPC_NM \
  --range 10.0.0.0/16 \
  --region $LOCATION \
  --enable-private-ip-google-access \
  --project $SVC_PROJECT_ID 
+ 
+gcloud compute --project=$SVC_PROJECT_ID firewall-rules create allow-intra-$SPARK_GCE_CLUSTER_SUBNET \
+--direction=INGRESS \
+--priority=1000 \
+--network=$VPC_NM \
+--action=ALLOW \
+--rules=all \
+--source-ranges=$SPARK_GKE_CLUSTER_SUBNET_CIDR
+ 
+
 ```
 
-## 4.c. Create subnet for Dataproc - GKE
+## 4.c. Create subnet & firewall rules for Dataproc - GKE
 
 ```
+SPARK_GKE_CLUSTER_SUBNET_CIDR=10.2.0.0/16
+
 gcloud compute networks subnets create $SPARK_GKE_CLUSTER_SUBNET \
  --network $VPC_NM \
- --range 10.2.0.0/16 \
+ --range $SPARK_GKE_CLUSTER_SUBNET_CIDR \
  --region $LOCATION \
  --enable-private-ip-google-access \
- --project $SVC_PROJECT_ID 
+ --project $SVC_PROJECT_ID
+ 
+gcloud compute --project=$SVC_PROJECT_ID firewall-rules create allow-intra-$SPARK_GKE_CLUSTER_SUBNET \
+--direction=INGRESS \
+--priority=1000 \
+--network=$VPC_NM \
+--action=ALLOW \
+--rules=all \
+--source-ranges=$SPARK_GKE_CLUSTER_SUBNET_CIDR
 ```
 
-## 4.d. Create subnet for Dataproc - S8S
+## 4.d. Create subnet & firewall rules for Dataproc - S8S
 
 
 ```
+SPARK_SERVERLESS_SUBNET_CIDR=10.4.0.0/16
+
 gcloud compute networks subnets create $SPARK_SERVERLESS_SUBNET \
  --network $VPC_NM \
- --range 10.4.0.0/16 \
+ --range $SPARK_SERVERLESS_SUBNET_CIDR  \
  --region $LOCATION \
  --enable-private-ip-google-access \
  --project $SVC_PROJECT_ID 
+ 
+gcloud compute --project=$SVC_PROJECT_ID firewall-rules create allow-intra-$SPARK_SERVERLESS_SUBNET \
+--direction=INGRESS \
+--priority=1000 \
+--network=$VPC_NM \
+--action=ALLOW \
+--rules=all \
+--source-ranges=$SPARK_SERVERLESS_SUBNET_CIDR
 ```
 
+## 4.e. Create subnet & firewall rules for Dataproc - PSHS & DPMS
+
+```
+SPARK_CATCH_ALL_SUBNET_CIDR=10.6.0.0/24
+
+gcloud compute networks subnets create $SPARK_CATCH_ALL_SUBNET \
+ --network $VPC_NM \
+ --range $SPARK_CATCH_ALL_SUBNET_CIDR \
+ --region $LOCATION \
+ --enable-private-ip-google-access \
+ --project $SVC_PROJECT_ID 
+ 
+gcloud compute --project=$SVC_PROJECT_ID firewall-rules create allow-intra-$SPARK_CATCH_ALL_SUBNET \
+--direction=INGRESS \
+--priority=1000 \
+--network=$VPC_NM \
+--action=ALLOW \
+--rules=all \
+--source-ranges=$SPARK_CATCH_ALL_SUBNET_CIDR
+ 
+```
+
+### 4.f. Grant the office CIDR access
+
+```
+gcloud compute firewall-rules create allow-ingress-from-office \
+--direction=INGRESS \
+--priority=1000 \
+--network=$VPC_NM \
+--action=ALLOW \
+--rules=all \
+--source-ranges=$OFFICE_CIDR
+```
 
 ## 5.0. Create staging buckets for clusters
 
@@ -285,7 +352,9 @@ spark:spark.history.fs.logDirectory=gs://$PERSISTENT_HISTORY_SERVER_BUCKET/fs-lo
 spark:spark.eventLog.dir=gs://$PERSISTENT_HISTORY_SERVER_BUCKET/event-logs/spark-job-history,
 mapred:mapreduce.jobhistory.done-dir=gs://$PERSISTENT_HISTORY_SERVER_BUCKET/event-logs/mapreduce-job-history/done,
 mapred:mapreduce.jobhistory.intermediate-done-dir=gs://$PERSISTENT_HISTORY_SERVER_BUCKET/fs-logs/mapreduce-job-history/intermediate-done' \
---service-account=$SVC_PROJECT_UMSA_FQN 
+--service-account=$SVC_PROJECT_UMSA_FQN \
+--single-node \
+--subnet=projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_CATCH_ALL_SUBNET
 ```
 
 ## 7.0. Create Dataproc Metastore Service
