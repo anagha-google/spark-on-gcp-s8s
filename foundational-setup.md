@@ -235,6 +235,8 @@ gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $PERSISTENT_HISTORY_
 
 ## 6.0. Create common Persistent Spark History Server
 
+Docs: https://cloud.google.com/dataproc/docs/concepts/jobs/history-server
+
 ```
 gcloud dataproc clusters create $PERSISTENT_HISTORY_SERVER_NM \
     --region=$LOCATION \
