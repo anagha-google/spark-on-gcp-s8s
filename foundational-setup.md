@@ -28,7 +28,7 @@ SPARK_SERVERLESS_BUCKET=gs://$SPARK_SERVERLESS_NM-$SVC_PROJECT_NBR
 
 
 PERSISTENT_HISTORY_SERVER_NM=$PROJECT_KEYWORD-sphs
-PERSISTENT_HISTORY_SERVER_BUCKET=gs://$PROJECT_KEYWORD-sphs-bucket
+PERSISTENT_HISTORY_SERVER_BUCKET=gs://$PROJECT_KEYWORD-sphs-$SVC_PROJECT_NBR
 
 DATAPROC_METASTORE_SERVICE_NM=$PROJECT_KEYWORD-dpms
 
@@ -66,6 +66,7 @@ gcloud services enable pubsub.googleapis.com
 gcloud services enable dns.googleapis.com
 gcloud services enable sqladmin.googleapis.com
 gcloud services enable vpcaccess.googleapis.com
+gcloud services enable metastore.googleapis.com
 
 ```
 
@@ -197,6 +198,15 @@ gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$
 
 gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$SVC_PROJECT_UMSA_FQN \
 --role="roles/bigquery.admin"
+
+gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$SVC_PROJECT_UMSA_FQN \
+--role="roles/dataproc.worker"
+
+gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$SVC_PROJECT_UMSA_FQN \
+--role="roles/metastore.admin"
+
+gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$SVC_PROJECT_UMSA_FQN \
+--role="roles/metastore.editor"
 
 ```
 
@@ -344,21 +354,28 @@ Docs: https://cloud.google.com/dataproc/docs/concepts/jobs/history-server
 
 ```
 gcloud dataproc clusters create $PERSISTENT_HISTORY_SERVER_NM \
+    --single-node \
     --region=$LOCATION \
     --image-version=1.4-debian10 \
     --enable-component-gateway \
-    --properties='dataproc:job.history.to-gcs.enabled=true,
-spark:spark.history.fs.logDirectory=gs://$PERSISTENT_HISTORY_SERVER_BUCKET/fs-logs/spark-job-history,
-spark:spark.eventLog.dir=gs://$PERSISTENT_HISTORY_SERVER_BUCKET/event-logs/spark-job-history,
-mapred:mapreduce.jobhistory.done-dir=gs://$PERSISTENT_HISTORY_SERVER_BUCKET/event-logs/mapreduce-job-history/done,
-mapred:mapreduce.jobhistory.intermediate-done-dir=gs://$PERSISTENT_HISTORY_SERVER_BUCKET/fs-logs/mapreduce-job-history/intermediate-done' \
---service-account=$SVC_PROJECT_UMSA_FQN \
+    --properties="dataproc:job.history.to-gcs.enabled=true,spark:spark.history.fs.logDirectory=$PERSISTENT_HISTORY_SERVER_BUCKET/*/spark-job-history,mapred:mapreduce.jobhistory.read-only.dir-pattern=$PERSISTENT_HISTORY_SERVER_BUCKET/*/mapreduce-job-history/done" \
+    --service-account=$SVC_PROJECT_UMSA_FQN \
 --single-node \
 --subnet=projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_CATCH_ALL_SUBNET
 ```
 
+
+
 ## 7.0. Create Dataproc Metastore Service
 
-
-
-
+Does not support BYO subnet-
+```
+gcloud metastore services create $DATAPROC_METASTORE_SERVICE_NM \
+    --location=$LOCATION \
+    --labels=used-by=all-vajra-clusters \
+    --network=$VPC_NM \
+    --port=9083 \
+    --tier=Developer \
+    --hive-metastore-version=3.1.2 \
+    --impersonate-service-account=$SVC_PROJECT_UMSA_FQN 
+```
