@@ -22,9 +22,9 @@ SPARK_GCE_CLUSTER_NM=$PROJECT_KEYWORD-gce
 SPARK_GKE_CLUSTER_NM=$PROJECT_KEYWORD-gke
 SPARK_SERVERLESS_NM=$PROJECT_KEYWORD-s8s
 
-SPARK_GCE_CLUSTER_BUCKET=gs://$SPARK_GCE_CLUSTER_NM-$SVC_PROJECT_NUMBER
-SPARK_GKE_CLUSTER_BUCKET=gs://$SPARK_GKE_CLUSTER_NM-$SVC_PROJECT_NUMBER
-SPARK_SERVERLESS_BUCKET=gs://$SPARK_SERVERLESS_NM-$SVC_PROJECT_NUMBER
+SPARK_GCE_CLUSTER_BUCKET=gs://$SPARK_GCE_CLUSTER_NM-$SVC_PROJECT_NBR
+SPARK_GKE_CLUSTER_BUCKET=gs://$SPARK_GKE_CLUSTER_NM-$SVC_PROJECT_NBR
+SPARK_SERVERLESS_BUCKET=gs://$SPARK_SERVERLESS_NM-$SVC_PROJECT_NBR
 
 PERSISTENT_HISTORY_SERVER_NM=$PROJECT_KEYWORD-sphs
 PERSISTENT_HISTORY_SERVER_BUCKET=gs://$PROJECT_KEYWORD-sphs-bucket
@@ -170,13 +170,48 @@ gcloud org-policies set-policy restrictVpcPeering.yaml
 rm restrictVpcPeering.yaml
 ```
 
-## 3.0. Create a User Managed Service Account
+## 3.0. Create a User Managed Service Account (UMSA) & grant it requisite permissions
 
+### 3.a. Create UMSA
 ```
 gcloud iam service-accounts create ${SVC_PROJECT_UMSA} \
     --description="User Managed Service Account for the $PROJECT_KEYWORD Service Project" \
     --display-name=$SVC_PROJECT_UMSA 
 ```
+### 3.b. Grant IAM permissions for UMSA
+
+```
+gcloud projects add-iam-policy-binding ${SVC_PROJECT_ID} \
+    --member=serviceAccount:${SVC_PROJECT_UMSA_FQN} \
+    --role=roles/iam.serviceAccountUser
+    
+gcloud projects add-iam-policy-binding ${SVC_PROJECT_ID} \
+    --member=serviceAccount:${SVC_PROJECT_UMSA_FQN} \
+    --role=roles/iam.serviceAccountTokenCreator 
+    
+gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$SVC_PROJECT_UMSA_FQN \
+--role="roles/bigquery.dataEditor"
+
+
+gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$SVC_PROJECT_UMSA_FQN \
+--role="roles/bigquery.admin"
+
+```
+
+### 3.c. Grant permissions for the lab attendee
+
+```
+gcloud iam service-accounts add-iam-policy-binding \
+    ${SVC_PROJECT_UMSA_FQN} \
+    --member="user:${ADMIN_FQ_UPN}" \
+    --role="roles/iam.serviceAccountUser"
+    
+gcloud iam service-accounts add-iam-policy-binding \
+    ${SVC_PROJECT_UMSA_FQN} \
+    --member="user:${ADMIN_FQ_UPN}" \
+    --role="roles/iam.serviceAccountTokenCreator"
+```
+
 
 ## 4.0. Create VPC, Subnets and Firewall Rules
 
@@ -249,7 +284,8 @@ gcloud dataproc clusters create $PERSISTENT_HISTORY_SERVER_NM \
 spark:spark.history.fs.logDirectory=gs://$PERSISTENT_HISTORY_SERVER_BUCKET/fs-logs/spark-job-history,
 spark:spark.eventLog.dir=gs://$PERSISTENT_HISTORY_SERVER_BUCKET/event-logs/spark-job-history,
 mapred:mapreduce.jobhistory.done-dir=gs://$PERSISTENT_HISTORY_SERVER_BUCKET/event-logs/mapreduce-job-history/done,
-mapred:mapreduce.jobhistory.intermediate-done-dir=gs://$PERSISTENT_HISTORY_SERVER_BUCKET/fs-logs/mapreduce-job-history/intermediate-done'
+mapred:mapreduce.jobhistory.intermediate-done-dir=gs://$PERSISTENT_HISTORY_SERVER_BUCKET/fs-logs/mapreduce-job-history/intermediate-done' \
+--service-account=$SVC_PROJECT_UMSA_FQN 
 ```
 
 ## 7.0. Create Dataproc Metastore Service
