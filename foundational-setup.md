@@ -206,7 +206,7 @@ gcloud compute networks subnets create $SPARK_GCE_CLUSTER_SUBNET \
 ```
 gcloud compute networks subnets create $SPARK_GKE_CLUSTER_SUBNET \
  --network $VPC_NM \
- --range 10.0.3.0/16 \
+ --range 10.2.0.0/16 \
  --region $LOCATION \
  --enable-private-ip-google-access \
  --project $SVC_PROJECT_ID 
@@ -218,7 +218,7 @@ gcloud compute networks subnets create $SPARK_GKE_CLUSTER_SUBNET \
 ```
 gcloud compute networks subnets create $SPARK_SERVERLESS_SUBNET \
  --network $VPC_NM \
- --range 10.0.6.0/16 \
+ --range 10.4.0.0/16 \
  --region $LOCATION \
  --enable-private-ip-google-access \
  --project $SVC_PROJECT_ID 
