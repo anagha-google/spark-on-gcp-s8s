@@ -213,13 +213,15 @@ gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$
 ### 3.c. Grant permissions to the Compute Engine Default Google Managed Service Account
 
 ```
-gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$SVC_PROJECT_UMSA_FQN \
+COMPUTE_ENGINE_DEFAULT_GMSA=$SVC_PROJECT_NBR-compute@developer.gserviceaccount.com
+
+gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$COMPUTE_ENGINE_DEFAULT_GMSA \
 --role="roles/bigquery.dataEditor"
 
-gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$SVC_PROJECT_UMSA_FQN \
+gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$COMPUTE_ENGINE_DEFAULT_GMSA \
 --role="roles/bigquery.admin"
 
-gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$SVC_PROJECT_UMSA_FQN \
+gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$COMPUTE_ENGINE_DEFAULT_GMSA \
 --role="roles/dataproc.worker"
 ```
 
