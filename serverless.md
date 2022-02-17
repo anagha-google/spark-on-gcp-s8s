@@ -32,7 +32,9 @@ DATAPROC_METASTORE_SERVICE_NM=$PROJECT_KEYWORD-dpms
 VPC_NM=$PROJECT_KEYWORD-vpc
 SPARK_SERVERLESS_SUBNET=$SPARK_SERVERLESS_NM-snet
 
-OFFICE_CIDR=98.222.97.10/32
+BIGSPARK_CODE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$SVC_PROJECT_NBR-code
+
+
 ```
 
 ```
@@ -43,3 +45,12 @@ gcloud dataproc batches submit spark
 --jars=file:///usr/lib/spark/examples/jars/spark-examples.jar
 --class org.apache.spark.examples.SparkPi -- 10000
 ```
+
+
+## 2. Create Storage Buckets
+
+```
+gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $BIGSPARK_CODE_BUCKET
+```
+
+
