@@ -41,15 +41,15 @@ BIGSPARK_CODE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$SVC_PROJECT_NBR-code
 
 - Currently supports Spark 3.x.x only
 - Supports only PySpark
-- Supports custom container image for dependencies
-- Does not support User Managed Service Account
+- Supports custom container image for dependencies - but not working right now
+- Needs a storage bucket into which the notebook code gets persisted
+- Logs and output available in the UI, for 24 hours, for longer use Persistent History Server
+- No Git integration yet 
+- Can provide Spark configs at submission time, full parity with Serverless Dataproc batch is not yet available
+
+- Supports BYO subnet, including shared VPC subnet
 - Does not support Dataproc Spark Persistent History Server
 - Does not support Dataproc Metastore Service
-- Needs a storage bucket into which the notebook code gets persisted
-- No Git integration yet 
-- Can provide Spark configs at submission time
-- Print logs to the UI
-- Supports BYO subnet, including shared VPC subnet
 
 
 ### 2.a. Create a storage bucket for the PySaprk code
