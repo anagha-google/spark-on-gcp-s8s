@@ -183,7 +183,7 @@ gcloud iam service-accounts create ${SVC_PROJECT_UMSA} \
 ## 4.a. Create VPC
 
 ```
-gcloud compute networks create $SHARED_VPC_NETWORK_NM \
+gcloud compute networks create $VPC_NM \
 --project=$SVC_PROJECT_ID \
 --subnet-mode=custom \
 --mtu=1460 \
