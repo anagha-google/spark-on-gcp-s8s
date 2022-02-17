@@ -1,10 +1,12 @@
 # About
 
-This module covers basics of running Serverless Spark on GCP.
+This module covers basics of running Serverless Spark on GCP from the BigQuery UI.
 
 ## 1. Variables
 
 ```
+#Replace as relevant to your environment
+
 PROJECT_KEYWORD="vajra"  
 
 ORG_ID=akhanolkar.altostrat.com                              
@@ -33,23 +35,10 @@ VPC_NM=$PROJECT_KEYWORD-vpc
 SPARK_SERVERLESS_SUBNET=$SPARK_SERVERLESS_NM-snet
 
 BIGSPARK_CODE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$SVC_PROJECT_NBR-code
-
-
 ```
 
 ## 2.0. Serverless Spark from BigQuery UI
-
-- Currently supports Spark 3.x.x only
-- Supports only PySpark
-- Supports custom container image for dependencies - but not working right now
-- Needs a storage bucket into which the notebook code gets persisted
-- Logs and output available in the UI, for 24 hours, for longer use Persistent History Server
-- No Git integration yet 
-- Can provide Spark configs at submission time, full parity with Serverless Dataproc batch is not yet available
-
-- Supports BYO subnet, including shared VPC subnet
-- Does not support Dataproc Spark Persistent History Server
-- Does not support Dataproc Metastore Service
+This module is based off of the currently supported features with serverless Spark from the BigQuery UI
 
 
 ### 2.a. Create a storage bucket for the PySaprk code
@@ -139,17 +128,6 @@ only showing top 20 rows
 ### 2.d. Switch to the Dataproc UI - "Serverless Batches"
 
 Notice that 
-
-
-
-## 2. Create Storage Buckets```
-gcloud dataproc batches submit spark
---project=dataproc-playground-335723
---region=us-central1
---subnet projects/dataproc-playground-335723/regions/us-central1/subnetworks/serverless-snet
---jars=file:///usr/lib/spark/examples/jars/spark-examples.jar
---class org.apache.spark.examples.SparkPi -- 10000
-```
 
 
 
