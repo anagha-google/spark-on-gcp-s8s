@@ -3,6 +3,7 @@
 
 ## 1.0. Variables
 
+```
 PROJECT_KEYWORD="vajra"  
 
 ORG_ID=akhanolkar.altostrat.com                              
@@ -39,7 +40,7 @@ SPARK_GKE_CLUSTER_SUBNET=$SPARK_GKE_CLUSTER_NM-snet
 SPARK_SERVERLESS_SUBNET=$SPARK_SERVERLESS_NM-snet
 
 ADMIN_PUB_IP=98.222.97.10/32
-
+```
 
 
 
