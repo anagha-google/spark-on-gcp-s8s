@@ -210,7 +210,21 @@ gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$
 
 ```
 
-### 3.c. Grant permissions for the lab attendee
+### 3.c. Grant permissions to the Compute Engine Default Google Managed Service Account
+
+```
+gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$SVC_PROJECT_UMSA_FQN \
+--role="roles/bigquery.dataEditor"
+
+gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$SVC_PROJECT_UMSA_FQN \
+--role="roles/bigquery.admin"
+
+gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$SVC_PROJECT_UMSA_FQN \
+--role="roles/dataproc.worker"
+```
+
+
+### 3.d. Grant permissions for the lab attendee
 
 ```
 gcloud iam service-accounts add-iam-policy-binding \
@@ -222,7 +236,23 @@ gcloud iam service-accounts add-iam-policy-binding \
     ${SVC_PROJECT_UMSA_FQN} \
     --member="user:${ADMINISTRATOR_UPN_FQN}" \
     --role="roles/iam.serviceAccountTokenCreator"
+    
+
+gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=user:$ADMINISTRATOR_UPN_FQN \
+--role="roles/bigquery.user"
+
+gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=user:$ADMINISTRATOR_UPN_FQN \
+--role="roles/bigquery.dataEditor"
+
+gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=user:$ADMINISTRATOR_UPN_FQN \
+--role="roles/bigquery.jobUser"
+
+
+gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=user:$ADMINISTRATOR_UPN_FQN \
+--role="roles/bigquery.admin"
 ```
+
+
 
 
 ## 4.0. Create VPC, Subnets and Firewall Rules
