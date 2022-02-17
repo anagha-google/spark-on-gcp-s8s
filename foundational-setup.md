@@ -172,9 +172,11 @@ rm restrictVpcPeering.yaml
 
 ## 3.0. Create a User Managed Service Account
 
+```
 gcloud iam service-accounts create ${SVC_PROJECT_UMSA} \
     --description="User Managed Service Account for the $PROJECT_KEYWORD Service Project" \
     --display-name=$SVC_PROJECT_UMSA 
+```
 
 ## 4.0. Create VPC, Subnets and Firewall Rules
 
