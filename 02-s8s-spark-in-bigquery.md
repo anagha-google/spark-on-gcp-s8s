@@ -26,6 +26,7 @@ gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $BIGSPARK_CODE_BUCKE
 ### 2.b. Navigate to the BigQuery UI for serveless PySpark
 
 Follow the steps below to get to the BigQuery UI for serverless PySpark-
+  
 ![bqui-01](../00-images/s8s-bqui-01.png)  
 
 
