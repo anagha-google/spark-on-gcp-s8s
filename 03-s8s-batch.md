@@ -120,12 +120,20 @@ Lets look at the logs-
 Lets navigate on the cloud console to the Persistent Spark History Server
 
 ![batch-05](00-images/s8s-batch-05.png) 
-
-
-  
+ 
 <br><br>
 
+![batch-06](00-images/s8s-batch-06.png) 
+ 
+<br><br>
 
+![batch-07](00-images/s8s-batch-07.png) 
+ 
+<br><br>
+
+![batch-08](00-images/s8s-batch-08.png) 
+ 
+<br><br>
 
 
 <br><br>
