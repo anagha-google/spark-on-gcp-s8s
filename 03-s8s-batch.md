@@ -56,13 +56,34 @@ SPARK_CATCH_ALL_SUBNET=$PROJECT_KEYWORD-misc-snet
 On cloud shell in the cloud console, run the following command to start a serverless batch job that calculates and prints the value of Pi. This is a great test for smoke-testing environment setup.
 
 ```
-gcloud dataproc batches submit spark
---project=$SVC_PROJECT_ID
---region=$LOCATION
---subnet projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET
---jars=file:///usr/lib/spark/examples/jars/spark-examples.jar
+gcloud dataproc batches submit spark \
+--project=$SVC_PROJECT_ID \
+--region=$LOCATION \
+--subnet projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
+--jars=file:///usr/lib/spark/examples/jars/spark-examples.jar \
 --class org.apache.spark.examples.SparkPi -- 10000
 ```
+
+You should see results in cloud shell similar to this-
+![batch-01](00-images/s8s-batch-01.png)  
+  
+<br><br>
+
+Lets navigate in Cloud Console to the Dataproc service and go to "Serverless" and look at the logs-
+
+
+![batch-02](00-images/s8s-batch-02.png)  
+  
+<br><br>
+
+![batch-03](00-images/s8s-batch-03.png)  
+  
+<br><br>
+
+![batch-04](00-images/s8s-batch-04.png)  
+  
+<br><br>
+
 
 
 <br><br>
