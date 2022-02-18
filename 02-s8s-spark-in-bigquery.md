@@ -46,8 +46,14 @@ Follow the steps below to get to the BigQuery UI for serverless PySpark-
   
   
 <br><br>
+Select the storage bucket you created in step 2
   
 ![bqui-05](00-images/s8s-bqui-05.png)  
+  
+<br><br>
+Select the subnet you created in the foundational module and save
+  
+![bqui-05](00-images/s8s-bqui-06.png) 
 
 
 ### 2.c. Paste the following into the notebook and execute
