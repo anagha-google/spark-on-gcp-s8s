@@ -25,6 +25,7 @@ PROJECT_KEYWORD="vajra"
 SVC_PROJECT_NBR=481704770619                           
 SVC_PROJECT_ID=dataproc-playground-335723 
 BIGSPARK_CODE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$SVC_PROJECT_NBR-code
+LOCATION=us-central1
   
 gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $BIGSPARK_CODE_BUCKET
 ```
@@ -269,10 +270,11 @@ Here is the output in the GUI-
 
 <hr>
 
-## 6. Looking at serverless jobs executed in Dataproc
+## 6. How do you look at serverless jobs executed in Dataproc?
 
 The listing can be found in the Dataproc -> Serverless -> Batches UI.<br>
-By clicking on the specific job, the execution logs can be visualized
+By clicking on the specific job, the execution logs can be visualized.<br>
+These logs are not permanently available, use Dataproc persistent Spark History Server to avoid losing logs after 24 hours.<br>
 
 ![bqui-11](00-images/s8s-bqui-11.png)
 
@@ -286,5 +288,30 @@ By clicking on the specific job, the execution logs can be visualized
 
 <br><br>
 
+## 7. What if you want to list or kill a job?
+
+Get a listing of jobs-
+```
+gcloud dataproc batches list --project $SVC_PROJECT_ID --region $LOCATION
+```
+
+Here are the author's list-
+```
+BATCH_ID: 7c93671131dc415f8c97c1dc3d899a29
+JOB_TYPE: spark
+STATUS: PENDING
+```
+
+To cancel the batch ID above, the command construct is as follows-
+```
+gcloud dataproc batches cancel 7c93671131dc415f8c97c1dc3d899a29 --project $SVC_PROJECT_ID --region $LOCATION
+```
+
+Sample result-
+```
+The batch [7c93671131dc415f8c97c1dc3d899a29] will be cancelled.
+```
+
 <hr>
 
+## 8. How do you find the servereless spark logs in Cloud Logging?
