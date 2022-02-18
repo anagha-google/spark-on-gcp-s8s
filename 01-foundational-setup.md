@@ -275,6 +275,20 @@ gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=user:$ADMINISTRA
 --role="roles/bigquery.admin"
 ```
 
+### 3.e. Pictorial overview of IAM permissions
+
+![iam-00](00-images/s8s-foundations-iam-00.png)   
+  
+<br><br>
+
+![iam-01](00-images/s8s-foundations-iam-01.png)   
+  
+<br><br>
+
+![iam-02](00-images/s8s-foundations-iam-02.png)     
+  
+<br><br>
+
 ## 4.0. Create VPC, Subnets and Firewall Rules
 
 ## 4.a. Create VPC
@@ -406,7 +420,7 @@ gcloud compute firewall-rules create allow-ingress-from-office \
 --source-ranges=$OFFICE_CIDR
 ```
 
-### 4.g. Pictorial overview of networking entities provisioned
+### 4.g. Pictorial overview of VPC and subnets
 
 ![net-03](00-images/s8s-foundations-net-03.png)  
   
@@ -416,6 +430,8 @@ gcloud compute firewall-rules create allow-ingress-from-office \
   
 <br><br>
 
+
+### 4.h. Pictorial overview of firewall rules
 
 ![net-05](00-images/s8s-foundations-net-05.png)  
   
