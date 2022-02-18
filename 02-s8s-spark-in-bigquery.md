@@ -1,12 +1,15 @@
 # About
 
-This module covers basics of running Serverless Spark on GCP from the BigQuery UI, with a very basic set of examples. The goal is to get you quick-started with using PySpark in the UI. <br>
+This module covers fundamentals of running serverless Spark on GCP from the BigQuery UI through a practical and basic set of examples to get you quick-started. 
 
 ## 1. Pre-requisites
+
 a) The Spark on BigQuery feature, currently needs enabling for Argolis. Submit a request [here](https://docs.google.com/forms/d/e/1FAIpQLSccIXlE5gJNE0dNs6vQvCfrCcSjnoHqaW2lxpoVkAh56KLOwA/viewform) with your Argolis user principal name - admin@<your-org-name>, example admin@<your-ldap>.altostrat.com. <br>
   
-b) Completion of the prior module<br>
+b) Completion of the prior module
+  <br>
   
+<hr>
   
 ## 2. Dependency - storage bucket for code 
 
