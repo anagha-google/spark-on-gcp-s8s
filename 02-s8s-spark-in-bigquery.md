@@ -106,7 +106,8 @@ Notice that
 
 
 
-## 3. Lets try Spark SQL
+## 3. Lets try Spark SQL in BigQuery
+
 
 ```
 from pyspark.sql import SparkSession
