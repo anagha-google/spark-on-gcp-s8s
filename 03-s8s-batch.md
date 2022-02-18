@@ -135,6 +135,21 @@ Lets navigate on the cloud console to the Persistent Spark History Server
  
 <br><br>
 
+![batch-09](00-images/s8s-batch-09.png) 
+ 
+<br><br>
+
+![batch-10](00-images/s8s-batch-10.png) 
+ 
+<br><br>
+
+![batch-11](00-images/s8s-batch-11.png) 
+ 
+<br><br>
+
+![batch-12](00-images/s8s-batch-12.png) 
+ 
+<br><br>
 
 <br><br>
 <hr>
