@@ -13,14 +13,17 @@ b) Completion of the prior module
   
 ## 2. Dependency - storage bucket for code 
 
-A storage bucket is needed. The code you author in the UI gets packaged and persisted in this storage bucket. Lets create a bucket.
+The code authored in the BigQuery UI gets packaged and persisted in this storage bucket.<br> 
+Lets create a bucket.
 <br>
   
 In cloud shell on the cloud console, run the below-
 ```
 #Replace as relevant to your environment
 
-PROJECT_KEYWORD="vajra"  
+PROJECT_KEYWORD="vajra" 
+SVC_PROJECT_NBR=481704770619                           
+SVC_PROJECT_ID=dataproc-playground-335723 
 BIGSPARK_CODE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$SVC_PROJECT_NBR-code
   
 gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $BIGSPARK_CODE_BUCKET
@@ -28,7 +31,7 @@ gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $BIGSPARK_CODE_BUCKE
 <hr>
   
 
-## 3. Navigate to the BigQuery UI for serveless PySpark
+## 3. Navigate to the BigQuery UI for serverless PySpark
 
 Follow the steps below to get to the BigQuery UI for serverless PySpark-
   
@@ -69,19 +72,22 @@ You should see a user interface as shown below-
   
 ![bqui-20](00-images/s8s-bqui-20.png) 
    
+<hr>
 
+## 4. Lets run a word count sample
 
-## 4. Lets get started
+We are going to read data from a BigQuery public dataset and run a distributed computation (word count) on it in serverless Spark.
   
 ### 4.a. Our data
   
-We are going to read data from the public dataset in BigQuery at ```bigquery-public-data.samples.shakespeare```. Here is a pictorial overview-
+We are going to read data from the public dataset in BigQuery at ```bigquery-public-data.samples.shakespeare```. <br>
+Here is a pictorial overview-
   
 ![bqui-22](00-images/s8s-bqui-21.png) 
   
 ### 4.b. The PySpark code
   
-This code reads the data in the table from 4.a and removes stopwords, and prints the top 20 corpuses with max word counts to the UI.
+This code reads the data in the table from 4.a, removes stopwords, and prints the top 20 corpuses with max word counts to the UI.
  
 ```
 from pyspark.sql import SparkSession
@@ -161,15 +167,11 @@ only showing top 20 rows
   
 ![bqui-10](00-images/s8s-bqui-10.png) 
 
-### 2.d. Switch to the Dataproc UI - "Serverless Batches"
 
-Notice that 
+## 5. Lets analyze Chicago crimes dataset with Spark SQL
 
-
-
-## 3. Lets try Spark SQL in BigQuery
-
-
+###5.a. Paste the code below that analyzes crimes by year in the UI
+  
 ```
 from pyspark.sql import SparkSession
 
