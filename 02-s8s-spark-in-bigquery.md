@@ -12,7 +12,9 @@ In cloud shell on the cloud console, run the below-
 PROJECT_KEYWORD="vajra"  
 BIGSPARK_CODE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$SVC_PROJECT_NBR-code
 ```
-
+<hr>
+  
+  
 ## 2.0. Serverless Spark from BigQuery UI
 This module is based off of the currently supported features with serverless Spark from the BigQuery UI
 
@@ -28,6 +30,24 @@ gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $BIGSPARK_CODE_BUCKE
 Follow the steps below to get to the BigQuery UI for serverless PySpark-
   
 ![bqui-01](00-images/s8s-bqui-01.png)  
+  
+<br><br>
+  
+![bqui-02](00-images/s8s-bqui-02.png)  
+  
+<br><br>
+  
+![bqui-03](00-images/s8s-bqui-03.png)  
+  
+  
+<br><br>
+  
+![bqui-04](00-images/s8s-bqui-04.png)  
+  
+  
+<br><br>
+  
+![bqui-05](00-images/s8s-bqui-05.png)  
 
 
 ### 2.c. Paste the following into the notebook and execute
