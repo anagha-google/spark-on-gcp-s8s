@@ -83,7 +83,7 @@ gcloud services enable metastore.googleapis.com
 
 ## 2.0. Update Organization Policies
 
-Might seem a tad excesive, but will be used in subsequent modules...
+The organization policies include the superset applicable for all flavors of Dataproc, required in Argolis. 
 
 ### 2.a. Relax require OS Login
 ```
@@ -291,6 +291,8 @@ gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=user:$ADMINISTRA
 
 ## 4.0. Create VPC, Subnets and Firewall Rules
 
+Dataproc is a VPC native service, therefore needs a VPC subnet.
+
 ## 4.a. Create VPC
 
 ```
@@ -446,6 +448,9 @@ gcloud compute firewall-rules create allow-ingress-from-office \
 
 ## 5.0. Create staging buckets for clusters
 
+These buckets are for clusters to store intermediate data and other operational data.<br>
+
+Run the command below to provision-
 ```
 gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $SPARK_GCE_CLUSTER_BUCKET
 gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $SPARK_GKE_CLUSTER_BUCKET
@@ -461,8 +466,10 @@ gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $PERSISTENT_HISTORY_
 
 ## 6.0. Create common Persistent Spark History Server
 
-Docs: https://cloud.google.com/dataproc/docs/concepts/jobs/history-server
+A common Persistent Spark History Server can be leveraged across clusters and serverless for log persistence/retention and visualization.<br>
+Docs: https://cloud.google.com/dataproc/docs/concepts/jobs/history-server<br>
 
+Run the command below to provision-
 ```
 gcloud dataproc clusters create $PERSISTENT_HISTORY_SERVER_NM \
     --single-node \
@@ -481,7 +488,10 @@ gcloud dataproc clusters create $PERSISTENT_HISTORY_SERVER_NM \
 
 ## 7.0. Create common Dataproc Metastore Service
 
-Does not support BYO subnet-
+A common Dataproc Metastore Service can be leveraged across clusters and serverless for Hive metadata.<br>
+This service does not support BYO subnet currently.<br>
+
+Run the command below to provision-
 ```
 gcloud metastore services create $DATAPROC_METASTORE_SERVICE_NM \
     --location=$LOCATION \
