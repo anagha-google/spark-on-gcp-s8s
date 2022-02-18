@@ -6,7 +6,7 @@ Lets get started...
 
 ## Prerequisites
 
-Completion of the foundational setup module.
+Completion of the [foundational setup module](foundational-setup.md).
 
 ## 1. Variables
 
@@ -46,6 +46,8 @@ VPC_PROJ_ID=$SVC_PROJECT_NBR
 VPC_NM=$PROJECT_KEYWORD-vpc
 SPARK_SERVERLESS_SUBNET=$SPARK_SERVERLESS_NM-snet
 SPARK_CATCH_ALL_SUBNET=$PROJECT_KEYWORD-misc-snet
+
+PERSISTENT_HISTORY_SERVER_NM=$PROJECT_KEYWORD-sphs
 ```
 
 <br><br>
@@ -56,13 +58,34 @@ SPARK_CATCH_ALL_SUBNET=$PROJECT_KEYWORD-misc-snet
 On cloud shell in the cloud console, run the following command to start a serverless batch job that calculates and prints the value of Pi. This is a great test for smoke-testing environment setup.
 
 ```
-gcloud dataproc batches submit spark
---project=$SVC_PROJECT_ID
---region=$LOCATION
---subnet projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET
---jars=file:///usr/lib/spark/examples/jars/spark-examples.jar
+gcloud dataproc batches submit spark \
+--project=$SVC_PROJECT_ID \
+--region=$LOCATION \
+--subnet projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
+--jars=file:///usr/lib/spark/examples/jars/spark-examples.jar \
 --class org.apache.spark.examples.SparkPi -- 10000
 ```
+
+You should see results in cloud shell similar to this-
+![batch-01](00-images/s8s-batch-01.png)  
+  
+<br><br>
+
+Lets navigate in Cloud Console to the Dataproc service and go to "Serverless" and look at the logs-
+
+
+![batch-02](00-images/s8s-batch-02.png)  
+  
+<br><br>
+
+![batch-03](00-images/s8s-batch-03.png)  
+  
+<br><br>
+
+![batch-04](00-images/s8s-batch-04.png)  
+  
+<br><br>
+
 
 
 <br><br>
@@ -70,13 +93,29 @@ gcloud dataproc batches submit spark
 
 ## 3. Run a simple batch job (SparkPi) with Persistent Spark History Server
 
+Lets repeat the same job, this time with the persistent history server we created in the [foundational setup module](foundational-setup.md).<br>
+All we need to do is add the following to the command-
+```
+--history-server-cluster=projects/$SVC_PROJECT_ID/regions/$LOCATION/clusters/$PERSISTENT_HISTORY_SERVER_NM
+```
+<br>
 
-
+On cloud shell in the cloud console, run the following command that includes the persistent spark history server-
+```
+gcloud dataproc batches submit spark \
+--project=$SVC_PROJECT_ID \
+--region=$LOCATION \
+--subnet projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
+--jars=file:///usr/lib/spark/examples/jars/spark-examples.jar \
+--history-server-cluster=projects/$SVC_PROJECT_ID/regions/$LOCATION/clusters/$PERSISTENT_HISTORY_SERVER_NM \
+--class org.apache.spark.examples.SparkPi -- 10000
+```
 
 <br><br>
 <hr>
 
 ## 4. Run a batch job with structured data using Dataproc Metastore Service
+
 
 
 
