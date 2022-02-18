@@ -282,5 +282,9 @@ By clicking on the specific job, the execution logs can be visualized
 
 <br><br>
 
+![bqui-13](00-images/s8s-bqui-13.png)
+
+<br><br>
+
 <hr>
 
