@@ -32,7 +32,8 @@ SVC_PROJECT_UMSA_FQN=$SVC_PROJECT_UMSA@$SVC_PROJECT_ID.iam.gserviceaccount.com
 
 
 SPARK_SERVERLESS_NM=$PROJECT_KEYWORD-s8s
-SPARK_SERVERLESS_BUCKET=gs://$SPARK_SERVERLESS_NM-$SVC_PROJECT_NBR
+SPARK_SERVERLESS_DATA_BUCKET=gs://$SPARK_SERVERLESS_NM-$SVC_PROJECT_NBR-DATA
+
 
 
 PERSISTENT_HISTORY_SERVER_NM=$PROJECT_KEYWORD-sphs
@@ -152,8 +153,32 @@ Lets navigate on the cloud console to the Persistent Spark History Server
 
 ## 4. Run a batch job with structured data using Dataproc Metastore Service
 
+### 4.1. Create a GCS bucket to persist some data for the exercise
+```
+gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $SPARK_SERVERLESS_DATA_BUCKET
+```
 
+### 4.2. Persist Coronory Heart Disease data to GCS
 
+Clone the git repo for this lab, on cloud shell
+```
+git clone https://github.com/anagha-google/spark-on-gcp.git
+```
+
+Navigate to the data directory and cat the file called CHD
+```
+cd ~/spark-on-gcp/00-data/
+head -5 CHD
+```
+
+You should see the below-
+```
+sbp,tobacco,ldl,adiposity,famhist,typea,obesity,alcohol,age,chd
+160,12,5.73,23.11,Present,49,25.3,97.2,52,1
+144,0.01,4.41,28.61,Absent,55,28.87,2.06,63,1
+118,0.08,3.48,32.28,Present,52,29.14,3.81,46,0
+170,7.5,6.41,38.03,Present,51,31.99,24.26,58,1
+```
 
 <br><br>
 <hr>
