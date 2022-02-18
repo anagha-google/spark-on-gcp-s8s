@@ -257,8 +257,30 @@ only showing top 20 rows
 only showing top 20 rows
 ```
 
+Here is the output in the GUI-
+
 ![bqui-18](00-images/s8s-bqui-18.png) 
 
 <br><br>
 
 ![bqui-19](00-images/s8s-bqui-19.png)
+
+<br><br>
+
+<hr>
+
+## 6. Looking at serverless jobs executed in Dataproc
+
+The listing can be found in the Dataproc -> Serverless -> Batches UI.<br>
+By clicking on the specific job, the execution logs can be visualized
+
+![bqui-11](00-images/s8s-bqui-11.png)
+
+<br><br>
+
+![bqui-12](00-images/s8s-bqui-12.png)
+
+<br><br>
+
+<hr>
+
