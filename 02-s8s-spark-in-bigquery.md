@@ -4,6 +4,7 @@ This module covers basics of running Serverless Spark on GCP from the BigQuery U
 
 ## 1. Variables
 
+In cloud shell on the cloud console, run the below-
 ```
 #Replace as relevant to your environment
 
@@ -104,4 +105,33 @@ only showing top 20 rows
 Notice that 
 
 
+
+## 3. Lets try Spark SQL
+
+```
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+  .appName('Chicago Crimes Analysis')\
+  .getOrCreate()
+
+# Read data from BigQuery
+df = spark.read \
+  .format('bigquery') \
+  .load('bigquery-public-data.chicago_crime.crime')
+
+# Count rows
+# print(df.count)
+
+# Create a temporary view
+df.createOrReplaceTempView("chicago_crimes")
+
+# Crimes count by year
+crimesByYear_df=spark.sql("SELECT year,count(*) AS crime_count FROM chicago_crimes GROUP BY year ORDER BY year;")
+crimesByYear_df.show()
+
+# Crimes count by year for specific crime types
+crimesByYearSpecific_df=spark.sql("SELECT cast(cast(year as string) as date) as case_year, primary_type as case_type, count(*) AS crime_count FROM chicago_crimes where primary_type in ('BATTERY','ASSAULT','CRIMINAL SEXUAL ASSAULT') GROUP BY case_year,primary_type ORDER BY case_year;")
+crimesByYearSpecific_df.show()
+```
 
