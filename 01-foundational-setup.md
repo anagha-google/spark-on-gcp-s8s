@@ -1,5 +1,7 @@
 # About
 
+This module covers the foundational setup required for Spark on Dataproc serverless, and also Dataproc on GCE and GKE.
+
 
 ## 1.0. Variables
 
@@ -45,6 +47,9 @@ SPARK_SERVERLESS_SUBNET=$SPARK_SERVERLESS_NM-snet
 SPARK_CATCH_ALL_SUBNET=$PROJECT_KEYWORD-misc-snet
 
 ```
+<br><br>
+
+<hr>
 
 ## 2.0. Enable APIs
 
@@ -69,6 +74,10 @@ gcloud services enable vpcaccess.googleapis.com
 gcloud services enable metastore.googleapis.com
 
 ```
+
+<br><br>
+
+<hr>
 
 ## 2.0. Update Organization Policies
 
@@ -174,6 +183,10 @@ gcloud org-policies set-policy restrictVpcPeering.yaml
 
 rm restrictVpcPeering.yaml
 ```
+
+<br><br>
+
+<hr>
 
 ## 3.0. Create a User Managed Service Account (UMSA) & grant it requisite permissions
 
