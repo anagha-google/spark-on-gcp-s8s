@@ -315,3 +315,22 @@ The batch [7c93671131dc415f8c97c1dc3d899a29] will be cancelled.
 <hr>
 
 ## 8. How do you find the servereless spark logs in Cloud Logging?
+
+Navigate to Cloud Logging on the cloud logging as shown below-
+
+![bqui-15](00-images/s8s-bqui-15.png)
+
+<br><br>
+
+![bqui-16](00-images/s8s-bqui-16.png)
+
+<br><br>
+
+![bqui-17](00-images/s8s-bqui-17.png)
+
+<br><br>
+
+<hr>
+
+This concludes the module.
+
