@@ -51,7 +51,36 @@ SPARK_CATCH_ALL_SUBNET=$PROJECT_KEYWORD-misc-snet
 <br><br>
 <hr>
 
-## 2. Run a SparkPi job
+## 2. Run a simple batch job (SparkPi)
 
-From 
+On cloud shell in the cloud console, run the following command to start a serverless batch job that calculates and prints the value of Pi. This is a great test for smoke-testing environment setup.
 
+```
+gcloud dataproc batches submit spark
+--project=$SVC_PROJECT_ID
+--region=$LOCATION
+--subnet projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET
+--jars=file:///usr/lib/spark/examples/jars/spark-examples.jar
+--class org.apache.spark.examples.SparkPi -- 10000
+```
+
+
+<br><br>
+<hr>
+
+## 3. Run a simple batch job (SparkPi) with Persistent Spark History Server
+
+
+
+
+<br><br>
+<hr>
+
+## 4. Run a batch job with structured data using Dataproc Metastore Service
+
+
+
+<br><br>
+<hr>
+
+This concludes the module.
