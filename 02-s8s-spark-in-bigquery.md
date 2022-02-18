@@ -1,7 +1,7 @@
 # About
 
 This module covers basics of running Serverless Spark on GCP from the BigQuery UI, with a very basic set of examples.<br>
-This feature needs enabling for Argolis. Submit a request here with your Argolis user principal name - admin@<your-org-name>, example admin@<your-ldap>.altostrat.com. 
+This feature needs enabling for Argolis. Submit a request [here](https://docs.google.com/forms/d/e/1FAIpQLSccIXlE5gJNE0dNs6vQvCfrCcSjnoHqaW2lxpoVkAh56KLOwA/viewform) with your Argolis user principal name - admin@<your-org-name>, example admin@<your-ldap>.altostrat.com. 
 
 ## 1. Variables
 
