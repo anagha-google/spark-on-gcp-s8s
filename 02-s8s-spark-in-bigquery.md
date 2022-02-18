@@ -74,7 +74,7 @@ You should see a user interface as shown below-
   
 We are going to read data from the public dataset in BigQuery at ```bigquery-public-data.samples.shakespeare```. Here is a pictorial overview-
   
-![bqui-22](00-images/s8s-bqui-22.png) 
+![bqui-22](00-images/s8s-bqui-21.png) 
   
 ### 4.b. The PySpark code
   
