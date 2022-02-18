@@ -170,7 +170,7 @@ only showing top 20 rows
 
 ## 5. Lets analyze Chicago crimes dataset with Spark SQL
 
-###5.a. Paste the code below that analyzes crimes by year in the UI
+### 5.a. Paste the code below that analyzes crimes by year in the UI & run
   
 ```
 from pyspark.sql import SparkSession
@@ -199,3 +199,66 @@ crimesByYearSpecific_df=spark.sql("SELECT cast(cast(year as string) as date) as 
 crimesByYearSpecific_df.show()
 ```
 
+The resuts should be something like this-
+```
++----+-----------+
+|year|crime_count|
++----+-----------+
+|2001|     485821|
+|2002|     486782|
+|2003|     475969|
+|2004|     469411|
+|2005|     453756|
+|2006|     448159|
+|2007|     437069|
+|2008|     427138|
+|2009|     392805|
+|2010|     370455|
+|2011|     351935|
+|2012|     336222|
+|2013|     307402|
+|2014|     275674|
+|2015|     264622|
+|2016|     269666|
+|2017|     268905|
+|2018|     268539|
+|2019|     260932|
+|2020|     211558|
++----+-----------+
+only showing top 20 rows
+
+22/02/17 23:13:05 INFO DirectBigQueryRelation: Querying table bigquery-public-data.chicago_crime.crime, parameters sent from Spark: requiredColumns=[primary_type,year],.....
+
+
++----------+--------------------+-----------+
+| case_year|           case_type|crime_count|
++----------+--------------------+-----------+
+|2001-01-01|CRIMINAL SEXUAL A...|         27|
+|2001-01-01|             BATTERY|      93452|
+|2001-01-01|             ASSAULT|      31384|
+|2002-01-01|             BATTERY|      94150|
+|2002-01-01|CRIMINAL SEXUAL A...|         22|
+|2002-01-01|             ASSAULT|      31521|
+|2003-01-01|CRIMINAL SEXUAL A...|         28|
+|2003-01-01|             ASSAULT|      29477|
+|2003-01-01|             BATTERY|      88379|
+|2004-01-01|CRIMINAL SEXUAL A...|         28|
+|2004-01-01|             ASSAULT|      28850|
+|2004-01-01|             BATTERY|      87136|
+|2005-01-01|CRIMINAL SEXUAL A...|         27|
+|2005-01-01|             BATTERY|      83964|
+|2005-01-01|             ASSAULT|      27066|
+|2006-01-01|             ASSAULT|      25945|
+|2006-01-01|             BATTERY|      80666|
+|2006-01-01|CRIMINAL SEXUAL A...|         38|
+|2007-01-01|CRIMINAL SEXUAL A...|         45|
+|2007-01-01|             ASSAULT|      26313|
++----------+--------------------+-----------+
+only showing top 20 rows
+```
+
+![bqui-18](00-images/s8s-bqui-18.png) 
+
+<br><br>
+
+![bqui-19](00-images/s8s-bqui-19.png)
