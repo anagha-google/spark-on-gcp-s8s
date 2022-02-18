@@ -51,13 +51,35 @@ Select the storage bucket you created in step 2
 ![bqui-05](00-images/s8s-bqui-05.png)  
   
 <br><br>
+  
+![bqui-06](00-images/s8s-bqui-06.png) 
+
+<br><br>
 Select the subnet you created in the foundational module and save
   
-![bqui-05](00-images/s8s-bqui-06.png) 
+  
+![bqui-07](00-images/s8s-bqui-07.png) 
+  
+<br><br>
+You should see a user interface as shown below-
+  
+  
+![bqui-20](00-images/s8s-bqui-20.png) 
+   
 
 
-### 2.c. Paste the following into the notebook and execute
-
+## 4. Lets get started
+  
+### 4.a. Our data
+  
+We are going to read data from the public dataset in BigQuery at ```bigquery-public-data.samples.shakespeare```. Here is a pictorial overview-
+  
+![bqui-22](00-images/s8s-bqui-22.png) 
+  
+### 4.b. The PySpark code
+  
+This code reads the data in the table from 4.a and removes stopwords, and prints the top 20 corpuses with max word counts to the UI.
+ 
 ```
 from pyspark.sql import SparkSession
 from pyspark.ml.feature import StopWordsRemover
@@ -91,6 +113,10 @@ df.select(df.corpus, F.struct(df.word_count, df.filtered.getItem(0).alias('word'
   .show(20)
 
 ```
+  
+### 4.c. Paste the code and run
+  
+![bqui-08](00-images/s8s-bqui-08.png) 
 
 The results should something like this-
 ```
