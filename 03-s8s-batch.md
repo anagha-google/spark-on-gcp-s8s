@@ -111,6 +111,23 @@ gcloud dataproc batches submit spark \
 --class org.apache.spark.examples.SparkPi -- 10000
 ```
 
+Lets look at the logs-
+
+![batch-12](00-images/s8s-batch-12.png)  
+  
+<br><br>
+
+Lets navigate on the cloud console to the Persistent Spark History Server
+
+![batch-13](00-images/s8s-batch-13.png) 
+
+
+  
+<br><br>
+
+
+
+
 <br><br>
 <hr>
 
