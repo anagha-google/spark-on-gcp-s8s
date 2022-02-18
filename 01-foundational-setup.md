@@ -5,6 +5,8 @@ This module covers the foundational setup required for Spark on Dataproc serverl
 
 ## 1.0. Variables
 
+odify the varibles below as applicable for your environment and run the same in the cloud shell on the [cloud console](https://console.cloud.google.com)
+
 ```
 PROJECT_KEYWORD="vajra"  
 
@@ -404,7 +406,25 @@ gcloud compute firewall-rules create allow-ingress-from-office \
 --source-ranges=$OFFICE_CIDR
 ```
 
+### 4.g. Pictorial overview of networking entities provisioned
+
+![net-03](00-images/s8s-foundations-net-03.png)  
+  
 <br><br>
+
+![net-04](00-images/s8s-foundations-net-04.png)   
+  
+<br><br>
+
+
+![net-05](00-images/s8s-foundations-net-05.png)  
+  
+<br><br>
+
+![net-06](00-images/s8s-foundations-net-06.png)  
+  
+<br><br>
+
 
 <hr>
 
