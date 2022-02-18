@@ -443,6 +443,20 @@ gcloud compute firewall-rules create allow-ingress-from-office \
   
 <br><br>
 
+### 4.i. Allow ingress from the serverless subnet 
+This is so the serverless cluster can communicate with the persistent spark histroy server.
+
+```
+gcloud compute --project $SVC_PROJECT_ID  \
+firewall-rules create allow-intra-vpc-ingress \
+--direction=INGRESS \
+--priority=1000 \
+--network=$VPC_NM \
+--action=ALLOW \
+--rules=all \
+--source-ranges=$SPARK_SERVERLESS_SUBNET_CIDR
+```
+
 
 <hr>
 
