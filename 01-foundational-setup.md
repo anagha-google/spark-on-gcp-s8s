@@ -190,6 +190,8 @@ rm restrictVpcPeering.yaml
 
 ## 3.0. Create a User Managed Service Account (UMSA) & grant it requisite permissions
 
+The User Managed Service Account (UMSA) is to avoid using default Google Managed Service Accounts where supported for tighter security and control.
+
 ### 3.a. Create UMSA
 ```
 gcloud iam service-accounts create ${SVC_PROJECT_UMSA} \
