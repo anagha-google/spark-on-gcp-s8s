@@ -155,6 +155,8 @@ SPARK_EXTRA_CLASSPATH=
 +--------------------+----------+-----+
 only showing top 20 rows
 ```
+  
+![bqui-10](00-images/s8s-bqui-10.png) 
 
 ### 2.d. Switch to the Dataproc UI - "Serverless Batches"
 
