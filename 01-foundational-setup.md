@@ -11,7 +11,10 @@ ORG_ID_NBR=236589261571
 ADMINISTRATOR_UPN_FQN=admin@$ORG_ID 
 
 SVC_PROJECT_NBR=481704770619                           
-SVC_PROJECT_ID=dataproc-playground-335723                     
+SVC_PROJECT_ID=dataproc-playground-335723   
+
+#Your public IP address, to add to the firewall
+OFFICE_CIDR=98.222.97.10/32
               
 LOCATION=us-central1
 
@@ -41,14 +44,11 @@ SPARK_GKE_CLUSTER_SUBNET=$SPARK_GKE_CLUSTER_NM-snet
 SPARK_SERVERLESS_SUBNET=$SPARK_SERVERLESS_NM-snet
 SPARK_CATCH_ALL_SUBNET=$PROJECT_KEYWORD-misc-snet
 
-OFFICE_CIDR=98.222.97.10/32
 ```
-
-
 
 ## 2.0. Enable APIs
 
-A tad excesive...
+Might seem a tad excesive, but will be used in subsequent modules...
 ```
 gcloud services enable dataproc.googleapis.com
 gcloud services enable orgpolicy.googleapis.com
@@ -71,6 +71,8 @@ gcloud services enable metastore.googleapis.com
 ```
 
 ## 2.0. Update Organization Policies
+
+Might seem a tad excesive, but will be used in subsequent modules...
 
 ### 2.a. Relax require OS Login
 ```
@@ -212,6 +214,8 @@ gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$
 
 ### 3.c. Grant permissions to the Compute Engine Default Google Managed Service Account
 
+Needed for serverless Spark from BigQuery, as it does not yet support User Managed Service Accounts
+
 ```
 COMPUTE_ENGINE_DEFAULT_GMSA=$SVC_PROJECT_NBR-compute@developer.gserviceaccount.com
 
@@ -226,7 +230,7 @@ gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$
 ```
 
 
-### 3.d. Grant permissions for the lab attendee
+### 3.d. Grant permissions for the lab attendee (yourself)
 
 ```
 gcloud iam service-accounts add-iam-policy-binding \
@@ -254,9 +258,6 @@ gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=user:$ADMINISTRA
 --role="roles/bigquery.admin"
 ```
 
-
-
-
 ## 4.0. Create VPC, Subnets and Firewall Rules
 
 ## 4.a. Create VPC
@@ -268,6 +269,10 @@ gcloud compute networks create $VPC_NM \
 --mtu=1460 \
 --bgp-routing-mode=regional
 ```
+
+<br><br>
+
+<hr>
 
 ## 4.b. Create subnet & firewall rules for Dataproc - GCE
 
@@ -288,9 +293,12 @@ gcloud compute --project=$SVC_PROJECT_ID firewall-rules create allow-intra-$SPAR
 --action=ALLOW \
 --rules=all \
 --source-ranges=$SPARK_GKE_CLUSTER_SUBNET_CIDR
- 
 
 ```
+
+<br><br>
+
+<hr>
 
 ## 4.c. Create subnet & firewall rules for Dataproc - GKE
 
@@ -312,6 +320,10 @@ gcloud compute --project=$SVC_PROJECT_ID firewall-rules create allow-intra-$SPAR
 --rules=all \
 --source-ranges=$SPARK_GKE_CLUSTER_SUBNET_CIDR
 ```
+
+<br><br>
+
+<hr>
 
 ## 4.d. Create subnet & firewall rules for Dataproc - S8S
 
@@ -335,6 +347,10 @@ gcloud compute --project=$SVC_PROJECT_ID firewall-rules create allow-intra-$SPAR
 --source-ranges=$SPARK_SERVERLESS_SUBNET_CIDR
 ```
 
+<br><br>
+
+<hr>
+
 ## 4.e. Create subnet & firewall rules for Dataproc - PSHS & DPMS
 
 ```
@@ -357,7 +373,11 @@ gcloud compute --project=$SVC_PROJECT_ID firewall-rules create allow-intra-$SPAR
  
 ```
 
-### 4.f. Grant the office CIDR access
+<br><br>
+
+<hr>
+
+### 4.f. Grant the office CIDR access (your IP address)
 
 ```
 gcloud compute firewall-rules create allow-ingress-from-office \
@@ -369,6 +389,10 @@ gcloud compute firewall-rules create allow-ingress-from-office \
 --source-ranges=$OFFICE_CIDR
 ```
 
+<br><br>
+
+<hr>
+
 ## 5.0. Create staging buckets for clusters
 
 ```
@@ -379,6 +403,10 @@ gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $SPARK_SERVERLESS_BU
 gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $PERSISTENT_HISTORY_SERVER_BUCKET
 
 ```
+
+<br><br>
+
+<hr>
 
 ## 6.0. Create common Persistent Spark History Server
 
@@ -395,7 +423,9 @@ gcloud dataproc clusters create $PERSISTENT_HISTORY_SERVER_NM \
 --single-node \
 --subnet=projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_CATCH_ALL_SUBNET
 ```
+<br><br>
 
+<hr>
 
 
 ## 7.0. Create common Dataproc Metastore Service
@@ -411,3 +441,6 @@ gcloud metastore services create $DATAPROC_METASTORE_SERVICE_NM \
     --hive-metastore-version=3.1.2 \
     --impersonate-service-account=$SVC_PROJECT_UMSA_FQN 
 ```
+<br><br>
+
+<hr>
