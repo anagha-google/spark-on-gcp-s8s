@@ -5,7 +5,7 @@ This module covers the foundational setup required for Spark on Dataproc serverl
 
 ## 1.0. Variables
 
-odify the varibles below as applicable for your environment and run the same in the cloud shell on the [cloud console](https://console.cloud.google.com)
+Modify the varibles below as applicable for your environment and run the same in the cloud shell on the [cloud console](https://console.cloud.google.com)
 
 ```
 PROJECT_KEYWORD="vajra"  
