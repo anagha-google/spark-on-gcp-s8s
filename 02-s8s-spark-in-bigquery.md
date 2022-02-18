@@ -1,8 +1,16 @@
 # About
 
 This module covers basics of running Serverless Spark on GCP from the BigQuery UI, with a very basic set of examples.<br>
-This feature needs enabling for Argolis. Submit a request [here](https://docs.google.com/forms/d/e/1FAIpQLSccIXlE5gJNE0dNs6vQvCfrCcSjnoHqaW2lxpoVkAh56KLOwA/viewform) with your Argolis user principal name - admin@<your-org-name>, example admin@<your-ldap>.altostrat.com. 
 
+## 1. Pre-requisites:
+a) The Spark on BigQuery feature, currently needs enabling for Argolis. Submit a request [here](https://docs.google.com/forms/d/e/1FAIpQLSccIXlE5gJNE0dNs6vQvCfrCcSjnoHqaW2lxpoVkAh56KLOwA/viewform) with your Argolis user principal name - admin@<your-org-name>, example admin@<your-ldap>.altostrat.com. <br>
+  
+b) Completion of the prior module<br>
+  
+  
+## 2. Dependencies:  
+
+  
 ## 1. Variables
 
 In cloud shell on the cloud console, run the below-
@@ -15,17 +23,13 @@ BIGSPARK_CODE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$SVC_PROJECT_NBR-code
 <hr>
   
   
-## 2.0. Serverless Spark from BigQuery UI
-This module is based off of the currently supported features with serverless Spark from the BigQuery UI
-
-
-### 2.a. Create a storage bucket for the PySaprk code
+## 2. Create a storage bucket for the PySaprk code
 
 ```
 gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $BIGSPARK_CODE_BUCKET
 ```
 
-### 2.b. Navigate to the BigQuery UI for serveless PySpark
+## 3. Navigate to the BigQuery UI for serveless PySpark
 
 Follow the steps below to get to the BigQuery UI for serverless PySpark-
   
