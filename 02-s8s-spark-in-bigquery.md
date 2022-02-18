@@ -1,30 +1,59 @@
 # About
 
-This module covers basics of running Serverless Spark on GCP from the BigQuery UI, with a very basic set of examples.<br>
-This feature needs enabling for Argolis. Submit a request [here](https://docs.google.com/forms/d/e/1FAIpQLSccIXlE5gJNE0dNs6vQvCfrCcSjnoHqaW2lxpoVkAh56KLOwA/viewform) with your Argolis user principal name - admin@<your-org-name>, example admin@<your-ldap>.altostrat.com. 
+This module covers basics of running Serverless Spark on GCP from the BigQuery UI, with a very basic set of examples. The goal is to get you quick-started with using PySpark in the UI. <br>
 
-## 1. Variables
+## 1. Pre-requisites
+a) The Spark on BigQuery feature, currently needs enabling for Argolis. Submit a request [here](https://docs.google.com/forms/d/e/1FAIpQLSccIXlE5gJNE0dNs6vQvCfrCcSjnoHqaW2lxpoVkAh56KLOwA/viewform) with your Argolis user principal name - admin@<your-org-name>, example admin@<your-ldap>.altostrat.com. <br>
+  
+b) Completion of the prior module<br>
+  
+  
+## 2. Dependency - storage bucket for code 
 
+A storage bucket is needed. The code you author in the UI gets packaged and persisted in this storage bucket. Lets create a bucket.
+<br>
+  
 In cloud shell on the cloud console, run the below-
 ```
 #Replace as relevant to your environment
 
 PROJECT_KEYWORD="vajra"  
 BIGSPARK_CODE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$SVC_PROJECT_NBR-code
-```
-
-## 2.0. Serverless Spark from BigQuery UI
-This module is based off of the currently supported features with serverless Spark from the BigQuery UI
-
-
-### 2.a. Create a storage bucket for the PySaprk code
-
-```
+  
 gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $BIGSPARK_CODE_BUCKET
 ```
+<hr>
+  
 
-### 2.b. Navigate to the BigQuery UI for PySpark
+## 3. Navigate to the BigQuery UI for serveless PySpark
 
+Follow the steps below to get to the BigQuery UI for serverless PySpark-
+  
+![bqui-01](00-images/s8s-bqui-01.png)  
+  
+<br><br>
+  
+![bqui-02](00-images/s8s-bqui-02.png)  
+  
+<br><br>
+  
+![bqui-03](00-images/s8s-bqui-03.png)  
+  
+  
+<br><br>
+  
+![bqui-04](00-images/s8s-bqui-04.png)  
+  
+  
+<br><br>
+Select the storage bucket you created in step 2
+  
+![bqui-05](00-images/s8s-bqui-05.png)  
+  
+<br><br>
+Select the subnet you created in the foundational module and save
+  
+![bqui-05](00-images/s8s-bqui-06.png) 
 
 
 ### 2.c. Paste the following into the notebook and execute
