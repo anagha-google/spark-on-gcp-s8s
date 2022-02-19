@@ -25,9 +25,11 @@ PROJECT_KEYWORD="vajra"
 SVC_PROJECT_NBR=481704770619                           
 SVC_PROJECT_ID=dataproc-playground-335723 
 BIGSPARK_CODE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$SVC_PROJECT_NBR-code
+BIGSPARK_STAGE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$SVC_PROJECT_NBR-stage
 LOCATION=us-central1
   
 gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $BIGSPARK_CODE_BUCKET
+gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $BIGSPARK_STAGE_BUCKET
 ```
 <hr>
   
@@ -291,16 +293,18 @@ $SVC_PROJECT_ID:chicago_crimes_datamart.crimes_by_year \
 crimes_year:INTEGER,crimes_count:NUMERIC
 ```
 
-
 #### 5.b.2. Run the PySpark code below to persist the crimes count by year to BigQuery
-Edit the reference to the table in the code below with your table with project and dataset prefix and run-
+Edit the reference to the (a) table in the code below with your table with project and dataset prefix, and the storage stage bucket with yours and run-
 
 ```
-from pyspark.sql import SparkSession
+from pyspark.sql import SparkSession,DataFrameWriter
 
 spark = SparkSession.builder \
   .appName('Chicago Crimes Analysis')\
   .getOrCreate()
+
+# Storage bucket for BigQuery connector to stage before persisting to BigQuery
+spark.conf.set('temporaryGcsBucket', "vajra-bigspark-481704770619-stage")
 
 # Read data from BigQuery
 baseDF = spark.read \
@@ -315,11 +319,34 @@ crimesByYearDF=spark.sql("SELECT year,count(*) AS crime_count FROM chicago_crime
 crimesByYearDF.show()
 
 # Persist to BigQuery
-crimesByYearDF.write.format("bigquery").option("table","chicago_crimes_datamart.crimes_by_year")options.mode(SaveMode.Append).save()
+crimesByYearDF.write.format("bigquery").option("table","chicago_crimes_datamart.crimes_by_year").mode('overwrite').save()
 ```
 
 <br><br>
+You can get to the logs from the dataproc->serverless->batches->job GUI directly as shown below-
 
+![bqui-22](00-images/s8s-bqui-22.png)
+
+<br><br>
+
+![bqui-23](00-images/s8s-bqui-23.png)
+
+<br><br>
+
+![bqui-24](00-images/s8s-bqui-24.png)
+
+<br><br>
+
+![bqui-25](00-images/s8s-bqui-25.png)
+
+<br><br>
+
+
+<br><br>
+Lets switch to BigQuery to validate the writes-
+
+
+<br><br>
 <hr>
 
 ## 6. How do you look at serverless jobs executed in Dataproc?
