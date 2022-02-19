@@ -186,31 +186,37 @@ gsutil cp sherlock-books.csv $SPARK_SERVERLESS_DATA_BUCKET
 
 ### 4.4. Create the external table definition (one time activity)
 
-In Cloud Shell, create a hql file
+In Cloud Shell, 
+
+a) Create a hql file
 
 You should see the below-
 ```
 rm sherlock-books.hql
 
 cat > sherlock-books.hql << ENDOFFILE
-CREATE EXTERNAL TABLE books(book_id string,author_nm string,book_nm string,pulication_yr int) LOCATION $SPARK_SERVERLESS_DATA_BUCKET
+CREATE EXTERNAL TABLE books(book_id string,author_nm string,book_nm string,pulication_yr int) LOCATION "$SPARK_SERVERLESS_DATA_BUCKET"
 ENDOFFILE
 ```
 
-Copy the hql file to the SQL bucket-
+b) Copy the hql file to the SQL bucket-
 ```
 gsutil cp sherlock-books.hql $SPARK_SERVERLESS_SQL_BUCKET
 ```
  
-Now lets submit the job to create the table defintion in the metastore
+### 4.5. Submit the job to create the table defintion in the metastore
 
 ```
+DATAPROC_METASTORE_SERVICE_NM=$PROJECT_KEYWORD-dpms
+
 gcloud dataproc batches submit spark-sql \
-  --project=${SVC_PROJECT} \
+  --project=${SVC_PROJECT_ID} \
   --region=${LOCATION} \
   --subnet=projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
-  --metastore-service=thrift://10.127.64.14:9083 \
-  $SPARK_SERVERLESS_SQL_BUCKET/sherlock-books.hql
+  --metastore-service=projects/$SVC_PROJECT_ID/locations/$LOCATION/services/$DATAPROC_METASTORE_SERVICE_NM  \
+  -e "CREATE EXTERNAL TABLE books(book_id string,author_nm string,book_nm string,pulication_yr int) LOCATION "$SPARK_SERVERLESS_DATA_BUCKET""
+  
+  #$SPARK_SERVERLESS_SQL_BUCKET/sherlock-books.hql
 ```
 
 <br><br>
