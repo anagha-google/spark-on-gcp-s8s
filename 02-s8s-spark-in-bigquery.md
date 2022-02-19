@@ -171,7 +171,7 @@ only showing top 20 rows
 
 ## 5. Lets analyze Chicago crimes dataset with Spark SQL
 
-### 5.a. Paste the code below that analyzes crimes by year in the UI & run
+### 5.a. Paste the code below that analyzes crimes by year & run
   
 ```
 from pyspark.sql import SparkSession
@@ -265,6 +265,63 @@ Here is the output in the GUI-
 
 <br><br>
 
+### 5.b. Lets modify the above to write to a BQ table
+
+Lets write this dataframe to a table-
+```
+# Crimes count by year
+crimesByYearDF=spark.sql("SELECT year,count(*) AS crime_count FROM chicago_crimes GROUP BY year ORDER BY year;")
+```
+
+#### 5.b.1. Create a BQ dataset and table
+
+Create a dataset-
+```
+bq --location=$LOCATION mk \
+--dataset \
+$SVC_PROJECT_ID:chicago_crimes_datamart
+```
+
+
+Create a table-
+```
+bq mk \
+--table \
+$SVC_PROJECT_ID:chicago_crimes_datamart.crimes_by_year \
+crimes_year:INTEGER,crimes_count:NUMERIC
+```
+
+
+#### 5.b.2. Run the PySpark code below to persist the crimes count by year to BigQuery
+Edit the reference to the table in the code below with your table with project and dataset prefix and run-
+
+```
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+  .appName('Chicago Crimes Analysis')\
+  .getOrCreate()
+
+# Read data from BigQuery
+baseDF = spark.read \
+  .format('bigquery') \
+  .load('bigquery-public-data.chicago_crime.crime')
+
+# Create a temporary view
+baseDF.createOrReplaceTempView("chicago_crimes")
+
+# Crimes count by year
+crimesByYearDF=spark.sql("SELECT year,count(*) AS crime_count FROM chicago_crimes GROUP BY year ORDER BY year;")
+crimesByYearDF.show()
+
+# Persist to BigQuery
+crimesByYearDF..write.format("bigquery")
+  .option("table","chicago_crimes_datamart.crimes_by_year")
+  .save())
+```
+
+<br><br>
+
 <hr>
 
 ## 6. How do you look at serverless jobs executed in Dataproc?
@@ -312,6 +369,22 @@ The batch [7c93671131dc415f8c97c1dc3d899a29] will be cancelled.
 <hr>
 
 ## 8. How do you find the servereless spark logs in Cloud Logging?
+
+Navigate to Cloud Logging on the cloud console, apply filters as shown below, to get to the logs-
+
+![bqui-15](00-images/s8s-bqui-15.png)
+
+<br><br>
+
+![bqui-16](00-images/s8s-bqui-16.png)
+
+<br><br>
+
+![bqui-17](00-images/s8s-bqui-17.png)
+
+<br><br>
+
+## 9. How do you find the servereless spark logs in Cloud Logging?
 
 Navigate to Cloud Logging on the cloud console, apply filters as shown below, to get to the logs-
 
