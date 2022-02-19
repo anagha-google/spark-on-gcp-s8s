@@ -32,7 +32,8 @@ SVC_PROJECT_UMSA_FQN=$SVC_PROJECT_UMSA@$SVC_PROJECT_ID.iam.gserviceaccount.com
 
 
 SPARK_SERVERLESS_NM=$PROJECT_KEYWORD-s8s
-SPARK_SERVERLESS_DATA_BUCKET=gs://$SPARK_SERVERLESS_NM-$SVC_PROJECT_NBR-DATA
+SPARK_SERVERLESS_DATA_BUCKET=gs://$SPARK_SERVERLESS_NM-$SVC_PROJECT_NBR-data
+SPARK_SERVERLESS_SQL_BUCKET=gs://$SPARK_SERVERLESS_NM-$SVC_PROJECT_NBR-sql
 
 
 
@@ -153,9 +154,10 @@ Lets navigate on the cloud console to the Persistent Spark History Server
 
 ## 4. Run a batch job with structured data using Dataproc Metastore Service
 
-### 4.1. Create a GCS bucket to persist some data for the exercise
+### 4.1. Create a GCS bucket for the data and the sql for the spark-sql demo respectively
 ```
 gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $SPARK_SERVERLESS_DATA_BUCKET
+gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $SPARK_SERVERLESS_SQL_BUCKET
 ```
 
 ### 4.2. Create a CSV and persist to GCS
@@ -174,6 +176,40 @@ cat > sherlock-books.csv << ENDOFFILE
 "b00300","Arthur Conan Doyle","The hounds of Baskerville",1901
 ENDOFFILE
 
+```
+
+### 4.3. Copy the file to the bucket
+
+```
+gsutil cp sherlock-books.csv $SPARK_SERVERLESS_DATA_BUCKET
+```
+
+### 4.4. Create the external table definition (one time activity)
+
+In Cloud Shell, create a hql file
+
+You should see the below-
+```
+rm sherlock-books.hql
+
+cat > sherlock-books.hql << ENDOFFILE
+CREATE EXTERNAL TABLE books(book_id string,author_nm string,book_nm string,pulication_yr int) LOCATION $SPARK_SERVERLESS_DATA_BUCKET
+ENDOFFILE
+```
+
+Copy the hql file to the SQL bucket-
+```
+gsutil cp sherlock-books.hql $SPARK_SERVERLESS_SQL_BUCKET
+```
+ 
+Now lets submit the jon to create the table defintion in the metastore
+
+```
+gcloud dataproc batches submit spark-sql \
+  --project=${SVC_PROJECT} \
+  --region=${LOCATION} \
+  --subnet projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
+  $SPARK_SERVERLESS_SQL_BUCKET/sherlock-books.hql
 ```
 
 <br><br>
