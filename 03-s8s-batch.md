@@ -202,13 +202,14 @@ Copy the hql file to the SQL bucket-
 gsutil cp sherlock-books.hql $SPARK_SERVERLESS_SQL_BUCKET
 ```
  
-Now lets submit the jon to create the table defintion in the metastore
+Now lets submit the job to create the table defintion in the metastore
 
 ```
 gcloud dataproc batches submit spark-sql \
   --project=${SVC_PROJECT} \
   --region=${LOCATION} \
-  --subnet projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
+  --subnet=projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
+  --metastore-service=thrift://10.127.64.14:9083 \
   $SPARK_SERVERLESS_SQL_BUCKET/sherlock-books.hql
 ```
 
