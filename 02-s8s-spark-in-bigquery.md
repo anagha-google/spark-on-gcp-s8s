@@ -341,6 +341,10 @@ You can get to the logs from the dataproc->serverless->batches->job GUI directly
 
 <br><br>
 
+![bqui-26](00-images/s8s-bqui-26.png)
+
+<br><br>
+
 
 <br><br>
 Lets switch to BigQuery to validate the writes-
