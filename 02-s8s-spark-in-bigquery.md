@@ -382,22 +382,6 @@ Navigate to Cloud Logging on the cloud console, apply filters as shown below, to
 
 <br><br>
 
-## 9. How do you find the servereless spark logs in Cloud Logging?
-
-Navigate to Cloud Logging on the cloud console, apply filters as shown below, to get to the logs-
-
-![bqui-15](00-images/s8s-bqui-15.png)
-
-<br><br>
-
-![bqui-16](00-images/s8s-bqui-16.png)
-
-<br><br>
-
-![bqui-17](00-images/s8s-bqui-17.png)
-
-<br><br>
-
 <hr>
 
 This concludes the module.
