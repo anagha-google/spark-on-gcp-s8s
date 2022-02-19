@@ -315,9 +315,7 @@ crimesByYearDF=spark.sql("SELECT year,count(*) AS crime_count FROM chicago_crime
 crimesByYearDF.show()
 
 # Persist to BigQuery
-crimesByYearDF.write.format("bigquery")
-  .option("table","chicago_crimes_datamart.crimes_by_year")
-  .save())
+crimesByYearDF.write.format("bigquery").option("table","chicago_crimes_datamart.crimes_by_year").save()
 ```
 
 <br><br>
