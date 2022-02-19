@@ -181,23 +181,20 @@ spark = SparkSession.builder \
   .getOrCreate()
 
 # Read data from BigQuery
-df = spark.read \
+baseDF = spark.read \
   .format('bigquery') \
   .load('bigquery-public-data.chicago_crime.crime')
 
-# Count rows
-# print(df.count)
-
 # Create a temporary view
-df.createOrReplaceTempView("chicago_crimes")
+baseDF.createOrReplaceTempView("chicago_crimes")
 
 # Crimes count by year
-crimesByYear_df=spark.sql("SELECT year,count(*) AS crime_count FROM chicago_crimes GROUP BY year ORDER BY year;")
-crimesByYear_df.show()
+crimesByYearDF=spark.sql("SELECT year,count(*) AS crime_count FROM chicago_crimes GROUP BY year ORDER BY year;")
+crimesByYearDF.show()
 
 # Crimes count by year for specific crime types
-crimesByYearSpecific_df=spark.sql("SELECT cast(cast(year as string) as date) as case_year, primary_type as case_type, count(*) AS crime_count FROM chicago_crimes where primary_type in ('BATTERY','ASSAULT','CRIMINAL SEXUAL ASSAULT') GROUP BY case_year,primary_type ORDER BY case_year;")
-crimesByYearSpecific_df.show()
+crimesByYearAndTypeDF=spark.sql("SELECT cast(cast(year as string) as date) as case_year, primary_type as case_type, count(*) AS crime_count FROM chicago_crimes where primary_type in ('BATTERY','ASSAULT','CRIMINAL SEXUAL ASSAULT') GROUP BY case_year,primary_type ORDER BY case_year;")
+crimesByYearAndTypeDF.show()
 ```
 
 The resuts should be something like this-
