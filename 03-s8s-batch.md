@@ -226,7 +226,7 @@ You should see the below-
 rm sherlock-books.hql
 
 cat > sherlock-books-count.hql << ENDOFFILE
-"SELECT count(*) AS book_count FROM books"
+SELECT count(*) AS book_count FROM books
 ENDOFFILE
 ```
 
