@@ -428,7 +428,7 @@ Run the command below to provision-
 ```
 gcloud metastore services create $DATAPROC_METASTORE_SERVICE_NM \
     --location=$LOCATION \
-    --labels=used-by=all-vajra-clusters \
+    --labels=used-by=all-$PROJECT_KEYWORD-clusters \
     --network=$VPC_NM \
     --port=9083 \
     --tier=Developer \
