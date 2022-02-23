@@ -19,17 +19,21 @@ Lets create a bucket.
   
 In cloud shell on the cloud console, run the below-
 ```
-#Replace as relevant to your environment
+#Identifier to use across resources provisioned for traceability and for unique names
+PROJECT_KEYWORD="trident"  
 
-PROJECT_KEYWORD="vajra" 
-SVC_PROJECT_NBR=481704770619                           
-SVC_PROJECT_ID=dataproc-playground-335723 
-BIGSPARK_CODE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$SVC_PROJECT_NBR-code
-BIGSPARK_STAGE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$SVC_PROJECT_NBR-stage
+#Replace with your details
+ORG_ID=akhanolkar.altostrat.com                              
+ADMINISTRATOR_UPN_FQN=admin@$ORG_ID 
+PROJECT_ID=trident-13
+PROJECT_NBR=758178719767  
+
+BIGSPARK_CODE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$PROJECT_NBR-code
+BIGSPARK_STAGE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$PROJECT_NBR-stage
 LOCATION=us-central1
   
-gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $BIGSPARK_CODE_BUCKET
-gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $BIGSPARK_STAGE_BUCKET
+gsutil mb -p $PROJECT_ID -c STANDARD -l $LOCATION -b on $BIGSPARK_CODE_BUCKET
+gsutil mb -p $PROJECT_ID -c STANDARD -l $LOCATION -b on $BIGSPARK_STAGE_BUCKET
 ```
 <hr>
   
@@ -281,7 +285,7 @@ Create a dataset-
 ```
 bq --location=$LOCATION mk \
 --dataset \
-$SVC_PROJECT_ID:chicago_crimes_datamart
+$PROJECT_ID:chicago_crimes_datamart
 ```
 
 
@@ -289,7 +293,7 @@ Create a table-
 ```
 bq mk \
 --table \
-$SVC_PROJECT_ID:chicago_crimes_datamart.crimes_by_year \
+$PROJECT_ID:chicago_crimes_datamart.crimes_by_year \
 crimes_year:INTEGER,crimes_count:NUMERIC
 ```
 
@@ -370,7 +374,7 @@ These logs are not permanently available, use Dataproc persistent Spark History 
 
 Get a listing of jobs-
 ```
-gcloud dataproc batches list --project $SVC_PROJECT_ID --region $LOCATION
+gcloud dataproc batches list --project $PROJECT_ID --region $LOCATION
 ```
 
 Here are the author's list-
