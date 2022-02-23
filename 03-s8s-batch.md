@@ -248,6 +248,7 @@ gcloud dataproc batches submit spark-sql \
   $SPARK_SERVERLESS_SQL_BUCKET/sherlock-books-count.hql
 ```
 
+You should see it emit the record count in the output.
 
 <br><br>
 <hr>
