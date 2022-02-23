@@ -386,7 +386,7 @@ STATUS: PENDING
 
 To cancel the batch ID above, the command construct is as follows-
 ```
-gcloud dataproc batches cancel 7c93671131dc415f8c97c1dc3d899a29 --project $SVC_PROJECT_ID --region $LOCATION
+gcloud dataproc batches cancel 7c93671131dc415f8c97c1dc3d899a29 --project $PROJECT_ID --region $LOCATION
 ```
 
 Sample result-
