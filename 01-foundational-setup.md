@@ -181,7 +181,7 @@ The User Managed Service Account (UMSA) is to avoid using default Google Managed
 
 ### 3.a. Create UMSA
 ```
-gcloud iam service-accounts create ${PROJECT_UMSA} \
+gcloud iam service-accounts create ${UMSA} \
     --description="User Managed Service Account for the $PROJECT_KEYWORD Service Project" \
     --display-name=$UMSA 
 ```
