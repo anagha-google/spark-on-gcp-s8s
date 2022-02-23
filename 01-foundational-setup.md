@@ -410,7 +410,7 @@ gcloud dataproc clusters create $PERSISTENT_HISTORY_SERVER_NM \
     --image-version=1.4-debian10 \
     --enable-component-gateway \
     --properties="dataproc:job.history.to-gcs.enabled=true,spark:spark.history.fs.logDirectory=$PERSISTENT_HISTORY_SERVER_BUCKET/*/spark-job-history,mapred:mapreduce.jobhistory.read-only.dir-pattern=$PERSISTENT_HISTORY_SERVER_BUCKET/*/mapreduce-job-history/done" \
-    --service-account=$SVC_PROJECT_UMSA_FQN \
+    --service-account=$UMSA_FQN \
 --single-node \
 --subnet=projects/$PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_CATCH_ALL_SUBNET
 ```
