@@ -226,7 +226,7 @@ You should see the below-
 rm sherlock-books.hql
 
 cat > sherlock-books-count.hql << ENDOFFILE
-"SELECT count(*) as book_count from books"
+"SELECT count(*) AS book_count FROM books"
 ENDOFFILE
 ```
 
@@ -244,7 +244,7 @@ gcloud dataproc batches submit spark-sql \
   --region=${LOCATION} \
   --subnet=projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
   --metastore-service=projects/$SVC_PROJECT_ID/locations/$LOCATION/services/$DATAPROC_METASTORE_SERVICE_NM  \
-  --deps-bucket=$SPARK_SERVERLESS_CLUSTER_BUCKET
+  --deps-bucket=$SPARK_SERVERLESS_CLUSTER_BUCKET \
   $SPARK_SERVERLESS_SQL_BUCKET/sherlock-books-count.hql
 ```
 
