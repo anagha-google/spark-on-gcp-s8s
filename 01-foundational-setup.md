@@ -75,7 +75,7 @@ The organization policies include the superset applicable for all flavors of Dat
 rm os_login.yaml
 
 cat > os_login.yaml << ENDOFFILE
-name: projects/${SVC_PROJECT_ID}/policies/compute.requireOsLogin
+name: projects/${PROJECT_ID}/policies/compute.requireOsLogin
 spec:
   rules:
   - enforce: false
@@ -92,7 +92,7 @@ rm os_login.yaml
 rm disableSerialPortLogging.yaml
 
 cat > disableSerialPortLogging.yaml << ENDOFFILE
-name: projects/${SVC_PROJECT_ID}/policies/compute.disableSerialPortLogging
+name: projects/${PROJECT_ID}/policies/compute.disableSerialPortLogging
 spec:
   rules:
   - enforce: false
@@ -109,7 +109,7 @@ rm disableSerialPortLogging.yaml
 shieldedVm.yaml 
 
 cat > shieldedVm.yaml << ENDOFFILE
-name: projects/$SVC_PROJECT_ID/policies/compute.requireShieldedVm
+name: projects/$PROJECT_ID/policies/compute.requireShieldedVm
 spec:
   rules:
   - enforce: false
@@ -126,7 +126,7 @@ rm shieldedVm.yaml
 rm vmCanIpForward.yaml
 
 cat > vmCanIpForward.yaml << ENDOFFILE
-name: projects/$SVC_PROJECT_ID/policies/compute.vmCanIpForward
+name: projects/$PROJECT_ID/policies/compute.vmCanIpForward
 spec:
   rules:
   - allowAll: true
@@ -143,7 +143,7 @@ rm vmCanIpForward.yaml
 rm vmExternalIpAccess.yaml
 
 cat > vmExternalIpAccess.yaml << ENDOFFILE
-name: projects/$SVC_PROJECT_ID/policies/compute.vmExternalIpAccess
+name: projects/$PROJECT_ID/policies/compute.vmExternalIpAccess
 spec:
   rules:
   - allowAll: true
@@ -160,7 +160,7 @@ rm vmExternalIpAccess.yaml
 rm restrictVpcPeering.yaml
 
 cat > restrictVpcPeering.yaml << ENDOFFILE
-name: projects/$SVC_PROJECT_ID/policies/compute.restrictVpcPeering
+name: projects/$PROJECT_ID/policies/compute.restrictVpcPeering
 spec:
   rules:
   - allowAll: true
@@ -181,35 +181,35 @@ The User Managed Service Account (UMSA) is to avoid using default Google Managed
 
 ### 3.a. Create UMSA
 ```
-gcloud iam service-accounts create ${SVC_PROJECT_UMSA} \
+gcloud iam service-accounts create ${PROJECT_UMSA} \
     --description="User Managed Service Account for the $PROJECT_KEYWORD Service Project" \
-    --display-name=$SVC_PROJECT_UMSA 
+    --display-name=$UMSA 
 ```
 ### 3.b. Grant IAM permissions for UMSA
 
 ```
-gcloud projects add-iam-policy-binding ${SVC_PROJECT_ID} \
-    --member=serviceAccount:${SVC_PROJECT_UMSA_FQN} \
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+    --member=serviceAccount:${UMSA_FQN} \
     --role=roles/iam.serviceAccountUser
     
-gcloud projects add-iam-policy-binding ${SVC_PROJECT_ID} \
-    --member=serviceAccount:${SVC_PROJECT_UMSA_FQN} \
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+    --member=serviceAccount:${UMSA_FQN} \
     --role=roles/iam.serviceAccountTokenCreator 
     
-gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$SVC_PROJECT_UMSA_FQN \
+gcloud projects add-iam-policy-binding $PROJECT_ID --member=serviceAccount:$UMSA_FQN \
 --role="roles/bigquery.dataEditor"
 
 
-gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$SVC_PROJECT_UMSA_FQN \
+gcloud projects add-iam-policy-binding $PROJECT_ID --member=serviceAccount:$UMSA_FQN \
 --role="roles/bigquery.admin"
 
-gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$SVC_PROJECT_UMSA_FQN \
+gcloud projects add-iam-policy-binding $PROJECT_ID --member=serviceAccount:$UMSA_FQN \
 --role="roles/dataproc.worker"
 
-gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$SVC_PROJECT_UMSA_FQN \
+gcloud projects add-iam-policy-binding $PROJECT_ID --member=serviceAccount:$UMSA_FQN \
 --role="roles/metastore.admin"
 
-gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$SVC_PROJECT_UMSA_FQN \
+gcloud projects add-iam-policy-binding $PROJECT_ID --member=serviceAccount:$UMSA_FQN \
 --role="roles/metastore.editor"
 
 ```
@@ -219,15 +219,15 @@ gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$
 Needed for serverless Spark from BigQuery, as it does not yet support User Managed Service Accounts
 
 ```
-COMPUTE_ENGINE_DEFAULT_GMSA=$SVC_PROJECT_NBR-compute@developer.gserviceaccount.com
+COMPUTE_ENGINE_DEFAULT_GMSA=$PROJECT_NBR-compute@developer.gserviceaccount.com
 
-gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$COMPUTE_ENGINE_DEFAULT_GMSA \
+gcloud projects add-iam-policy-binding $PROJECT_ID --member=serviceAccount:$COMPUTE_ENGINE_DEFAULT_GMSA \
 --role="roles/bigquery.dataEditor"
 
-gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$COMPUTE_ENGINE_DEFAULT_GMSA \
+gcloud projects add-iam-policy-binding $PROJECT_ID --member=serviceAccount:$COMPUTE_ENGINE_DEFAULT_GMSA \
 --role="roles/bigquery.admin"
 
-gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$COMPUTE_ENGINE_DEFAULT_GMSA \
+gcloud projects add-iam-policy-binding $PROJECT_ID --member=serviceAccount:$COMPUTE_ENGINE_DEFAULT_GMSA \
 --role="roles/dataproc.worker"
 ```
 
@@ -236,27 +236,26 @@ gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=serviceAccount:$
 
 ```
 gcloud iam service-accounts add-iam-policy-binding \
-    ${SVC_PROJECT_UMSA_FQN} \
+    ${UMSA_FQN} \
     --member="user:${ADMINISTRATOR_UPN_FQN}" \
     --role="roles/iam.serviceAccountUser"
     
 gcloud iam service-accounts add-iam-policy-binding \
-    ${SVC_PROJECT_UMSA_FQN} \
+    ${UMSA_FQN} \
     --member="user:${ADMINISTRATOR_UPN_FQN}" \
     --role="roles/iam.serviceAccountTokenCreator"
     
 
-gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=user:$ADMINISTRATOR_UPN_FQN \
+gcloud projects add-iam-policy-binding $PROJECT_ID --member=user:$ADMINISTRATOR_UPN_FQN \
 --role="roles/bigquery.user"
 
-gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=user:$ADMINISTRATOR_UPN_FQN \
+gcloud projects add-iam-policy-binding $PROJECT_ID --member=user:$ADMINISTRATOR_UPN_FQN \
 --role="roles/bigquery.dataEditor"
 
-gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=user:$ADMINISTRATOR_UPN_FQN \
+gcloud projects add-iam-policy-binding $PROJECT_ID --member=user:$ADMINISTRATOR_UPN_FQN \
 --role="roles/bigquery.jobUser"
 
-
-gcloud projects add-iam-policy-binding $SVC_PROJECT_ID --member=user:$ADMINISTRATOR_UPN_FQN \
+gcloud projects add-iam-policy-binding $PROJECT_ID --member=user:$ADMINISTRATOR_UPN_FQN \
 --role="roles/bigquery.admin"
 ```
 
@@ -282,7 +281,7 @@ Dataproc is a VPC native service, therefore needs a VPC subnet.
 
 ```
 gcloud compute networks create $VPC_NM \
---project=$SVC_PROJECT_ID \
+--project=$PROJECT_ID \
 --subnet-mode=custom \
 --mtu=1460 \
 --bgp-routing-mode=regional
@@ -292,58 +291,8 @@ gcloud compute networks create $VPC_NM \
 
 <hr>
 
-## 4.b. Create subnet & firewall rules for Dataproc - GCE
 
-```
-SPARK_GCE_CLUSTER_SUBNET_CIDR=10.0.0.0/16
-
-gcloud compute networks subnets create $SPARK_GCE_CLUSTER_SUBNET \
- --network $VPC_NM \
- --range 10.0.0.0/16 \
- --region $LOCATION \
- --enable-private-ip-google-access \
- --project $SVC_PROJECT_ID 
- 
-gcloud compute --project=$SVC_PROJECT_ID firewall-rules create allow-intra-$SPARK_GCE_CLUSTER_SUBNET \
---direction=INGRESS \
---priority=1000 \
---network=$VPC_NM \
---action=ALLOW \
---rules=all \
---source-ranges=$SPARK_GKE_CLUSTER_SUBNET_CIDR
-
-```
-
-<br><br>
-
-<hr>
-
-## 4.c. Create subnet & firewall rules for Dataproc - GKE
-
-```
-SPARK_GKE_CLUSTER_SUBNET_CIDR=10.2.0.0/16
-
-gcloud compute networks subnets create $SPARK_GKE_CLUSTER_SUBNET \
- --network $VPC_NM \
- --range $SPARK_GKE_CLUSTER_SUBNET_CIDR \
- --region $LOCATION \
- --enable-private-ip-google-access \
- --project $SVC_PROJECT_ID
- 
-gcloud compute --project=$SVC_PROJECT_ID firewall-rules create allow-intra-$SPARK_GKE_CLUSTER_SUBNET \
---direction=INGRESS \
---priority=1000 \
---network=$VPC_NM \
---action=ALLOW \
---rules=all \
---source-ranges=$SPARK_GKE_CLUSTER_SUBNET_CIDR
-```
-
-<br><br>
-
-<hr>
-
-## 4.d. Create subnet & firewall rules for Dataproc - S8S
+## 4.b. Create subnet & firewall rules for Dataproc - S8S
 
 
 ```
@@ -354,9 +303,9 @@ gcloud compute networks subnets create $SPARK_SERVERLESS_SUBNET \
  --range $SPARK_SERVERLESS_SUBNET_CIDR  \
  --region $LOCATION \
  --enable-private-ip-google-access \
- --project $SVC_PROJECT_ID 
+ --project $PROJECT_ID 
  
-gcloud compute --project=$SVC_PROJECT_ID firewall-rules create allow-intra-$SPARK_SERVERLESS_SUBNET \
+gcloud compute --project=$PROJECT_ID firewall-rules create allow-intra-$SPARK_SERVERLESS_SUBNET \
 --direction=INGRESS \
 --priority=1000 \
 --network=$VPC_NM \
@@ -369,7 +318,7 @@ gcloud compute --project=$SVC_PROJECT_ID firewall-rules create allow-intra-$SPAR
 
 <hr>
 
-## 4.e. Create subnet & firewall rules for Dataproc - PSHS & DPMS
+## 4.c. Create subnet & firewall rules for Dataproc - PSHS & DPMS
 
 ```
 SPARK_CATCH_ALL_SUBNET_CIDR=10.6.0.0/24
@@ -379,9 +328,9 @@ gcloud compute networks subnets create $SPARK_CATCH_ALL_SUBNET \
  --range $SPARK_CATCH_ALL_SUBNET_CIDR \
  --region $LOCATION \
  --enable-private-ip-google-access \
- --project $SVC_PROJECT_ID 
+ --project $PROJECT_ID 
  
-gcloud compute --project=$SVC_PROJECT_ID firewall-rules create allow-intra-$SPARK_CATCH_ALL_SUBNET \
+gcloud compute --project=$PROJECT_ID firewall-rules create allow-intra-$SPARK_CATCH_ALL_SUBNET \
 --direction=INGRESS \
 --priority=1000 \
 --network=$VPC_NM \
@@ -395,7 +344,7 @@ gcloud compute --project=$SVC_PROJECT_ID firewall-rules create allow-intra-$SPAR
 
 <hr>
 
-### 4.f. Grant the office CIDR access (your IP address)
+### 4.d. Grant access to your IP address
 
 ```
 gcloud compute firewall-rules create allow-ingress-from-office \
@@ -404,10 +353,10 @@ gcloud compute firewall-rules create allow-ingress-from-office \
 --network=$VPC_NM \
 --action=ALLOW \
 --rules=all \
---source-ranges=$OFFICE_CIDR
+--source-ranges=$YOUR_CIDR
 ```
 
-### 4.g. Pictorial overview of VPC and subnets
+### 4.e. Pictorial overview of VPC and subnets
 
 ![net-03](00-images/s8s-foundations-net-03.png)  
   
@@ -418,7 +367,7 @@ gcloud compute firewall-rules create allow-ingress-from-office \
 <br><br>
 
 
-### 4.h. Pictorial overview of firewall rules
+### 4.f. Pictorial overview of firewall rules
 
 ![net-05](00-images/s8s-foundations-net-05.png)  
   
@@ -428,19 +377,6 @@ gcloud compute firewall-rules create allow-ingress-from-office \
   
 <br><br>
 
-### 4.i. Allow ingress from the serverless subnet 
-This is so the serverless cluster can communicate with the persistent spark histroy server.
-
-```
-gcloud compute --project $SVC_PROJECT_ID  \
-firewall-rules create allow-intra-vpc-ingress \
---direction=INGRESS \
---priority=1000 \
---network=$VPC_NM \
---action=ALLOW \
---rules=all \
---source-ranges=$SPARK_SERVERLESS_SUBNET_CIDR
-```
 
 
 <hr>
@@ -451,10 +387,8 @@ These buckets are for clusters to store intermediate data and other operational 
 
 Run the command below to provision-
 ```
-gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $SPARK_GCE_CLUSTER_BUCKET
-gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $SPARK_GKE_CLUSTER_BUCKET
-gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $SPARK_SERVERLESS_BUCKET
 
+gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $SPARK_SERVERLESS_BUCKET
 gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $PERSISTENT_HISTORY_SERVER_BUCKET
 
 ```
@@ -478,7 +412,7 @@ gcloud dataproc clusters create $PERSISTENT_HISTORY_SERVER_NM \
     --properties="dataproc:job.history.to-gcs.enabled=true,spark:spark.history.fs.logDirectory=$PERSISTENT_HISTORY_SERVER_BUCKET/*/spark-job-history,mapred:mapreduce.jobhistory.read-only.dir-pattern=$PERSISTENT_HISTORY_SERVER_BUCKET/*/mapreduce-job-history/done" \
     --service-account=$SVC_PROJECT_UMSA_FQN \
 --single-node \
---subnet=projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_CATCH_ALL_SUBNET
+--subnet=projects/$PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_CATCH_ALL_SUBNET
 ```
 <br><br>
 
@@ -499,7 +433,7 @@ gcloud metastore services create $DATAPROC_METASTORE_SERVICE_NM \
     --port=9083 \
     --tier=Developer \
     --hive-metastore-version=3.1.2 \
-    --impersonate-service-account=$SVC_PROJECT_UMSA_FQN 
+    --impersonate-service-account=$UMSA_FQN 
 ```
 <br><br>
 
