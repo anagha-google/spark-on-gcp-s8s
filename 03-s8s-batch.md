@@ -34,7 +34,7 @@ SVC_PROJECT_UMSA_FQN=$SVC_PROJECT_UMSA@$SVC_PROJECT_ID.iam.gserviceaccount.com
 SPARK_SERVERLESS_NM=$PROJECT_KEYWORD-s8s
 SPARK_SERVERLESS_DATA_BUCKET=gs://$SPARK_SERVERLESS_NM-$SVC_PROJECT_NBR-data
 SPARK_SERVERLESS_SQL_BUCKET=gs://$SPARK_SERVERLESS_NM-$SVC_PROJECT_NBR-sql
-
+SPARK_SERVERLESS_CLUSTER_BUCKET=gs://$SPARK_SERVERLESS_NM-$SVC_PROJECT_NBR
 
 
 PERSISTENT_HISTORY_SERVER_NM=$PROJECT_KEYWORD-sphs
@@ -195,7 +195,7 @@ You should see the below-
 rm sherlock-books.hql
 
 cat > sherlock-books.hql << ENDOFFILE
-CREATE EXTERNAL TABLE books(book_id string,author_nm string,book_nm string,pulication_yr int) ROW FORMAT DELIMITED FIELDS TERMINATED BY "," LOCATION "$SPARK_SERVERLESS_DATA_BUCKET"
+CREATE EXTERNAL TABLE books(book_id string,author_nm string,book_nm string,pulication_yr int) ROW FORMAT DELIMITED FIELDS TERMINATED BY "," LOCATION "$SPARK_SERVERLESS_DATA_BUCKET/"
 ENDOFFILE
 ```
 
@@ -214,10 +214,40 @@ gcloud dataproc batches submit spark-sql \
   --region=${LOCATION} \
   --subnet=projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
   --metastore-service=projects/$SVC_PROJECT_ID/locations/$LOCATION/services/$DATAPROC_METASTORE_SERVICE_NM  \
-  -e "CREATE EXTERNAL TABLE books(book_id string,author_nm string,book_nm string,pulication_yr int) LOCATION "$SPARK_SERVERLESS_DATA_BUCKET""
-  
-  #$SPARK_SERVERLESS_SQL_BUCKET/sherlock-books.hql
+  $SPARK_SERVERLESS_SQL_BUCKET/sherlock-books.hql
 ```
+
+### 4.6. Submit a query against the external table
+
+a) Create a hql file
+
+You should see the below-
+```
+rm sherlock-books.hql
+
+cat > sherlock-books-count.hql << ENDOFFILE
+"SELECT count(*) as book_count from books"
+ENDOFFILE
+```
+
+b) Copy the hql file to the SQL bucket-
+```
+gsutil cp sherlock-books-count.hql $SPARK_SERVERLESS_SQL_BUCKET
+```
+
+c) Run query
+```
+DATAPROC_METASTORE_SERVICE_NM=$PROJECT_KEYWORD-dpms
+
+gcloud dataproc batches submit spark-sql \
+  --project=${SVC_PROJECT_ID} \
+  --region=${LOCATION} \
+  --subnet=projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
+  --metastore-service=projects/$SVC_PROJECT_ID/locations/$LOCATION/services/$DATAPROC_METASTORE_SERVICE_NM  \
+  --deps-bucket=$SPARK_SERVERLESS_CLUSTER_BUCKET
+  -e "select count(*) from books"
+```
+
 
 <br><br>
 <hr>
