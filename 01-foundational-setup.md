@@ -388,8 +388,8 @@ These buckets are for clusters to store intermediate data and other operational 
 Run the command below to provision-
 ```
 
-gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $SPARK_SERVERLESS_BUCKET
-gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $PERSISTENT_HISTORY_SERVER_BUCKET
+gsutil mb -p $PROJECT_ID -c STANDARD -l $LOCATION -b on $SPARK_SERVERLESS_BUCKET
+gsutil mb -p $PROJECT_ID -c STANDARD -l $LOCATION -b on $PERSISTENT_HISTORY_SERVER_BUCKET
 
 ```
 
