@@ -195,7 +195,7 @@ You should see the below-
 rm sherlock-books.hql
 
 cat > sherlock-books.hql << ENDOFFILE
-CREATE EXTERNAL TABLE books(book_id string,author_nm string,book_nm string,pulication_yr int) LOCATION "$SPARK_SERVERLESS_DATA_BUCKET"
+CREATE EXTERNAL TABLE books(book_id string,author_nm string,book_nm string,pulication_yr int) ROW FORMAT DELIMITED FIELDS TERMINATED BY "," LOCATION "$SPARK_SERVERLESS_DATA_BUCKET"
 ENDOFFILE
 ```
 
