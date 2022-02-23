@@ -13,37 +13,36 @@ Completion of the [foundational setup module](foundational-setup.md).
 Modify the varibles below as applicable for your environment and run the same in the cloud shell on the cloud console-
 
 ```
-PROJECT_KEYWORD="vajra"  
-
+#Replace with your specific values from module 1
+PROJECT_KEYWORD="trident"  
 ORG_ID=akhanolkar.altostrat.com                              
 ORG_ID_NBR=236589261571
 ADMINISTRATOR_UPN_FQN=admin@$ORG_ID 
-
-SVC_PROJECT_NBR=481704770619                           
-SVC_PROJECT_ID=dataproc-playground-335723   
+PROJECT_NBR=481704770619                           
+PROJECT_ID=dataproc-playground-335723   
 
 #Your public IP address, to add to the firewall
-OFFICE_CIDR=98.222.97.10/32
+YOUR_CIDR=98.222.97.10/32
               
 LOCATION=us-central1
 
-SVC_PROJECT_UMSA="$PROJECT_KEYWORD-sa"
-SVC_PROJECT_UMSA_FQN=$SVC_PROJECT_UMSA@$SVC_PROJECT_ID.iam.gserviceaccount.com
+UMSA="$PROJECT_KEYWORD-sa"
+UMSA_FQN=$SVC_PROJECT_UMSA@$PROJECT_ID.iam.gserviceaccount.com
 
 
 SPARK_SERVERLESS_NM=$PROJECT_KEYWORD-s8s
-SPARK_SERVERLESS_DATA_BUCKET=gs://$SPARK_SERVERLESS_NM-$SVC_PROJECT_NBR-data
-SPARK_SERVERLESS_SQL_BUCKET=gs://$SPARK_SERVERLESS_NM-$SVC_PROJECT_NBR-sql
-SPARK_SERVERLESS_CLUSTER_BUCKET=gs://$SPARK_SERVERLESS_NM-$SVC_PROJECT_NBR
+SPARK_SERVERLESS_DATA_BUCKET=gs://$SPARK_SERVERLESS_NM-$PROJECT_NBR-data
+SPARK_SERVERLESS_SQL_BUCKET=gs://$SPARK_SERVERLESS_NM-$PROJECT_NBR-sql
+SPARK_SERVERLESS_CLUSTER_BUCKET=gs://$SPARK_SERVERLESS_NM-$PROJECT_NBR
 
 
 PERSISTENT_HISTORY_SERVER_NM=$PROJECT_KEYWORD-sphs
-PERSISTENT_HISTORY_SERVER_BUCKET=gs://$PERSISTENT_HISTORY_SERVER_NM-$SVC_PROJECT_NBR
+PERSISTENT_HISTORY_SERVER_BUCKET=gs://$PERSISTENT_HISTORY_SERVER_NM-$PROJECT_NBR
 
 DATAPROC_METASTORE_SERVICE_NM=$PROJECT_KEYWORD-dpms
 
-VPC_PROJ_ID=$SVC_PROJECT_ID        
-VPC_PROJ_ID=$SVC_PROJECT_NBR  
+VPC_PROJ_ID=$PROJECT_ID        
+VPC_PROJ_ID=$PROJECT_NBR  
 
 VPC_NM=$PROJECT_KEYWORD-vpc
 SPARK_SERVERLESS_SUBNET=$SPARK_SERVERLESS_NM-snet
@@ -61,9 +60,9 @@ On cloud shell in the cloud console, run the following command to start a server
 
 ```
 gcloud dataproc batches submit spark \
---project=$SVC_PROJECT_ID \
+--project=$PROJECT_ID \
 --region=$LOCATION \
---subnet projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
+--subnet projects/$PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
 --jars=file:///usr/lib/spark/examples/jars/spark-examples.jar \
 --class org.apache.spark.examples.SparkPi -- 10000
 ```
@@ -98,18 +97,18 @@ Lets navigate in Cloud Console to the Dataproc service and go to "Serverless" an
 Lets repeat the same job, this time with the persistent history server we created in the [foundational setup module](foundational-setup.md).<br>
 All we need to do is add the following to the command-
 ```
---history-server-cluster=projects/$SVC_PROJECT_ID/regions/$LOCATION/clusters/$PERSISTENT_HISTORY_SERVER_NM
+--history-server-cluster=projects/$PROJECT_ID/regions/$LOCATION/clusters/$PERSISTENT_HISTORY_SERVER_NM
 ```
 <br>
 
 On cloud shell in the cloud console, run the following command that includes the persistent spark history server-
 ```
 gcloud dataproc batches submit spark \
---project=$SVC_PROJECT_ID \
+--project=$PROJECT_ID \
 --region=$LOCATION \
---subnet projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
+--subnet projects/$PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
 --jars=file:///usr/lib/spark/examples/jars/spark-examples.jar \
---history-server-cluster=projects/$SVC_PROJECT_ID/regions/$LOCATION/clusters/$PERSISTENT_HISTORY_SERVER_NM \
+--history-server-cluster=projects/$PROJECT_ID/regions/$LOCATION/clusters/$PERSISTENT_HISTORY_SERVER_NM \
 --class org.apache.spark.examples.SparkPi -- 10000
 ```
 
@@ -156,8 +155,8 @@ Lets navigate on the cloud console to the Persistent Spark History Server
 
 ### 4.1. Create a GCS bucket for the data and the sql for the spark-sql demo respectively
 ```
-gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $SPARK_SERVERLESS_DATA_BUCKET
-gsutil mb -p $SVC_PROJECT_ID -c STANDARD -l $LOCATION -b on $SPARK_SERVERLESS_SQL_BUCKET
+gsutil mb -p $PROJECT_ID -c STANDARD -l $LOCATION -b on $SPARK_SERVERLESS_DATA_BUCKET
+gsutil mb -p $PROJECT_ID -c STANDARD -l $LOCATION -b on $SPARK_SERVERLESS_SQL_BUCKET
 ```
 
 ### 4.2. Create a CSV and persist to GCS
@@ -210,10 +209,10 @@ gsutil cp sherlock-books.hql $SPARK_SERVERLESS_SQL_BUCKET
 DATAPROC_METASTORE_SERVICE_NM=$PROJECT_KEYWORD-dpms
 
 gcloud dataproc batches submit spark-sql \
-  --project=${SVC_PROJECT_ID} \
+  --project=${PROJECT_ID} \
   --region=${LOCATION} \
-  --subnet=projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
-  --metastore-service=projects/$SVC_PROJECT_ID/locations/$LOCATION/services/$DATAPROC_METASTORE_SERVICE_NM  \
+  --subnet=projects/$PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
+  --metastore-service=projects/$PROJECT_ID/locations/$LOCATION/services/$DATAPROC_METASTORE_SERVICE_NM  \
   $SPARK_SERVERLESS_SQL_BUCKET/sherlock-books.hql
 ```
 
@@ -240,10 +239,10 @@ c) Run query
 DATAPROC_METASTORE_SERVICE_NM=$PROJECT_KEYWORD-dpms
 
 gcloud dataproc batches submit spark-sql \
-  --project=${SVC_PROJECT_ID} \
+  --project=${PROJECT_ID} \
   --region=${LOCATION} \
-  --subnet=projects/$SVC_PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
-  --metastore-service=projects/$SVC_PROJECT_ID/locations/$LOCATION/services/$DATAPROC_METASTORE_SERVICE_NM  \
+  --subnet=projects/$PROJECT_ID/regions/$LOCATION/subnetworks/$SPARK_SERVERLESS_SUBNET \
+  --metastore-service=projects/$PROJECT_ID/locations/$LOCATION/services/$DATAPROC_METASTORE_SERVICE_NM  \
   --deps-bucket=$SPARK_SERVERLESS_CLUSTER_BUCKET \
   $SPARK_SERVERLESS_SQL_BUCKET/sherlock-books-count.hql
 ```
