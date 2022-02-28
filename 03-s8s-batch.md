@@ -1,6 +1,6 @@
 # About
 
-This module covers running **serverless batch jobs** with very basic examples. It covers how to use a persistent Spark History Server and also a common Dataproc Metastore Service.
+This module covers running **serverless batch jobs** with very basic examples. It includes how to use a persistent Spark History Server and also a common Dataproc Metastore Service, provisioned as part of module 1.
 
 Lets get started...
 
@@ -15,14 +15,14 @@ Modify the varibles below as applicable for your environment and run the same in
 ```
 #Replace with your specific values from module 1
 PROJECT_KEYWORD="trident"  
-ORG_ID=akhanolkar.altostrat.com                              
-ORG_ID_NBR=236589261571
+ORG_ID=<YOUR_ORG_ID>.altostrat.com                              
+ORG_ID_NBR=<YOUR_ORG_NUMBER>
 ADMINISTRATOR_UPN_FQN=admin@$ORG_ID 
-PROJECT_NBR=481704770619                           
-PROJECT_ID=dataproc-playground-335723   
+PROJECT_NBR=<YOUR_PROJECT_NUMBER>                           
+PROJECT_ID=<YOUR_PROJECT_ID>   
 
 #Your public IP address, to add to the firewall
-YOUR_CIDR=98.222.97.10/32
+YOUR_CIDR=xx.xxx.xx.xx/32
               
 LOCATION=us-central1
 
