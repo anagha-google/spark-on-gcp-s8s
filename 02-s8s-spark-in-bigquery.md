@@ -13,20 +13,20 @@ b) Completion of the prior module
   
 ## 2. Dependency - storage bucket for code 
 
-The code authored in the BigQuery UI gets packaged and persisted in this storage bucket.<br> 
+The code authored in the BigQuery UI gets packaged and persisted in this storage bucket, by serverless Spark on Dataproc.<br> 
 Lets create a bucket.
 <br>
   
 In cloud shell on the cloud console, run the below-
 ```
-#Identifier to use across resources provisioned for traceability and for unique names
+#Replace trident with the keyword from module 1
 PROJECT_KEYWORD="trident"  
 
 #Replace with your details
-ORG_ID=akhanolkar.altostrat.com                              
+ORG_ID=<YOUR_ID>.altostrat.com                              
 ADMINISTRATOR_UPN_FQN=admin@$ORG_ID 
-PROJECT_ID=trident-13
-PROJECT_NBR=758178719767  
+PROJECT_ID=<YOUR_PROJET_ID>
+PROJECT_NBR=<YOUR_PROJET_NBR>
 
 BIGSPARK_CODE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$PROJECT_NBR-code
 BIGSPARK_STAGE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$PROJECT_NBR-stage
