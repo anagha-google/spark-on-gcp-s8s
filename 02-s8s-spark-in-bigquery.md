@@ -414,5 +414,5 @@ Navigate to Cloud Logging on the cloud console, apply filters as shown below, to
 
 <hr>
 
-This concludes the module.
+This concludes the module. Proceed to the [next module](03-s8s-batch.md) to learn how to submit serverless Apache Spark batch jobs to Dataproc.
 
