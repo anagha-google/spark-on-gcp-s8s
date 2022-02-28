@@ -49,7 +49,8 @@ SPARK_CATCH_ALL_SUBNET=$PROJECT_KEYWORD-misc-snet
 
 ## 2.0. Enable APIs
 
-Enable APIs of services in scope for the lab, and their dependencies...
+Enable APIs of services in scope for the lab, and their dependencies.<br>
+Paste these and run in cloud shell-
 ```
 gcloud services enable dataproc.googleapis.com
 gcloud services enable orgpolicy.googleapis.com
@@ -67,7 +68,8 @@ gcloud services enable metastore.googleapis.com
 
 ## 2.0. Update Organization Policies
 
-The organization policies include the superset applicable for all flavors of Dataproc, required in Argolis. 
+The organization policies include the superset applicable for all flavors of Dataproc, required in Argolis.<br>
+Paste these and run in cloud shell-
 
 ### 2.a. Relax require OS Login
 ```
@@ -176,7 +178,8 @@ rm restrictVpcPeering.yaml
 
 ## 3.0. Create a User Managed Service Account (UMSA) & grant it requisite permissions
 
-The User Managed Service Account (UMSA) is to avoid using default Google Managed Service Accounts where supported for tighter security and control.
+The User Managed Service Account (UMSA) is to avoid using default Google Managed Service Accounts where supported for tighter security and control.<br>
+Paste these and run in cloud shell-
 
 ### 3.a. Create UMSA
 ```
@@ -184,7 +187,7 @@ gcloud iam service-accounts create ${UMSA} \
     --description="User Managed Service Account for the $PROJECT_KEYWORD Service Project" \
     --display-name=$UMSA 
 ```
-### 3.b. Grant IAM permissions for UMSA
+### 3.b. Grant IAM permissions for the UMSA
 
 ```
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
@@ -215,7 +218,8 @@ gcloud projects add-iam-policy-binding $PROJECT_ID --member=serviceAccount:$UMSA
 
 ### 3.c. Grant permissions to the Compute Engine Default Google Managed Service Account
 
-Needed for serverless Spark from BigQuery, as it does not yet support User Managed Service Accounts
+Needed for serverless Spark from BigQuery, as it does not yet support User Managed Service Accounts.<br>
+Paste these and run in cloud shell-
 
 ```
 COMPUTE_ENGINE_DEFAULT_GMSA=$PROJECT_NBR-compute@developer.gserviceaccount.com
@@ -232,7 +236,7 @@ gcloud projects add-iam-policy-binding $PROJECT_ID --member=serviceAccount:$COMP
 
 
 ### 3.d. Grant permissions for the lab attendee (yourself)
-
+Paste these and run in cloud shell-
 ```
 gcloud iam service-accounts add-iam-policy-binding \
     ${UMSA_FQN} \
@@ -274,7 +278,8 @@ gcloud projects add-iam-policy-binding $PROJECT_ID --member=user:$ADMINISTRATOR_
 
 ## 4.0. Create VPC, Subnets and Firewall Rules
 
-Dataproc is a VPC native service, therefore needs a VPC subnet.
+Dataproc is a VPC native service, therefore needs a VPC subnet.<br>
+Paste these and run in cloud shell-
 
 ## 4.a. Create VPC
 
@@ -293,7 +298,8 @@ gcloud compute networks create $VPC_NM \
 
 ## 4.b. Create subnet & firewall rules for Dataproc - S8S
 
-
+Dataproc serverless Spark needs intra subnet open ingress. <br>
+Paste these and run in cloud shell-
 ```
 SPARK_SERVERLESS_SUBNET_CIDR=10.4.0.0/16
 
@@ -318,6 +324,8 @@ gcloud compute --project=$PROJECT_ID firewall-rules create allow-intra-$SPARK_SE
 <hr>
 
 ## 4.c. Create subnet & firewall rules for Dataproc - PSHS & DPMS
+Further in the lab, we will create a persistent Spark History Server where the logs for serverless Spark jobs can be accessible beyond 24 hours (default without). We will also create a Dataproc Metastore Service for persistent Apache Hive Metastore.<br>
+Paste these and run in cloud shell-
 
 ```
 SPARK_CATCH_ALL_SUBNET_CIDR=10.6.0.0/24
