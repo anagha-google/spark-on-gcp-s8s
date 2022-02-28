@@ -1,25 +1,26 @@
 # About
 
-This module covers the foundational setup required for Spark on Dataproc serverless, and also Dataproc on GCE and GKE.
+This module covers the foundational setup required for serverless Apache Spark.
 
 
 ## 1.0. Variables
 
-Modify the varibles below as applicable for your environment and run the same in the cloud shell on the [cloud console](https://console.cloud.google.com)
+Below, we will define variables used in the module.<br>
+Modify as applicable for your environment and run the same in the cloud shell on the [cloud console](https://console.cloud.google.com)-
 
 ```
-#Identifier to use across resources provisioned for traceability and for unique names
+#Choose an identifier to prefix to resource names provisioned for traceability and for uniqueness
 PROJECT_KEYWORD="trident"  
 
 #Replace with your details
-ORG_ID=akhanolkar.altostrat.com                              
-ORG_ID_NBR=236589261571
+ORG_ID=<YOUR_ID>.altostrat.com                              
+ORG_ID_NBR=<YOIR_ORG_ID_NBR>
 ADMINISTRATOR_UPN_FQN=admin@$ORG_ID 
-PROJECT_ID=trident-13
-PROJECT_NBR=758178719767  
+PROJECT_ID=<YOuR_PROJECT_ID>
+PROJECT_NBR=<YOUR_PROJECT_NUMBER>  
 
 #Your public IP address, to add to the firewall
-YOUR_CIDR=98.222.97.10/32
+YOUR_CIDR=xx.xxx.xx.xx/32
 
 #General variables
 LOCATION=us-central1
@@ -41,7 +42,6 @@ VPC_PROJ_ID=$PROJECT_NBR
 VPC_NM=$PROJECT_KEYWORD-vpc
 SPARK_SERVERLESS_SUBNET=$SPARK_SERVERLESS_NM-snet
 SPARK_CATCH_ALL_SUBNET=$PROJECT_KEYWORD-misc-snet
-
 ```
 <br><br>
 
@@ -49,7 +49,7 @@ SPARK_CATCH_ALL_SUBNET=$PROJECT_KEYWORD-misc-snet
 
 ## 2.0. Enable APIs
 
-Might seem a tad excesive, but will be used in subsequent modules...
+Enable APIs of services in scope for the lab, and their dependencies...
 ```
 gcloud services enable dataproc.googleapis.com
 gcloud services enable orgpolicy.googleapis.com
@@ -59,7 +59,6 @@ gcloud services enable containerregistry.googleapis.com
 gcloud services enable bigquery.googleapis.com 
 gcloud services enable storage.googleapis.com
 gcloud services enable metastore.googleapis.com
-
 ```
 
 <br><br>
