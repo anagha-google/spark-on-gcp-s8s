@@ -41,7 +41,7 @@ DATAPROC_METASTORE_SERVICE_NM=$BASE_PREFIX-dpms
 
 VPC_NM=$BASE_PREFIX-vpc
 SPARK_SERVERLESS_SUBNET=$SPARK_SERVERLESS_NM-snet
-SPARK_CATCH_ALL_SUBNET=$PROJECT_KEYWORD-misc-snet
+SPARK_CATCH_ALL_SUBNET=$BASE_PREFIX-misc-snet
 ```
 
 <br><br>
@@ -199,8 +199,6 @@ gsutil cp sherlock-books.hql $SPARK_SERVERLESS_SQL_BUCKET
 ### 4.5. Submit the job to create the table defintion in the metastore
 
 ```
-DATAPROC_METASTORE_SERVICE_NM=$PROJECT_KEYWORD-dpms
-
 gcloud dataproc batches submit spark-sql \
   --project=${PROJECT_ID} \
   --region=${LOCATION} \
@@ -229,8 +227,6 @@ gsutil cp sherlock-books-count.hql $SPARK_SERVERLESS_SQL_BUCKET
 
 c) Run query
 ```
-DATAPROC_METASTORE_SERVICE_NM=$PROJECT_KEYWORD-dpms
-
 gcloud dataproc batches submit spark-sql \
   --project=${PROJECT_ID} \
   --region=${LOCATION} \
