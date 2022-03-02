@@ -19,14 +19,14 @@ Lets create a bucket.
   
 In cloud shell on the cloud console, run the below-
 ```
-#Replace trident with the keyword from module 1
-PROJECT_KEYWORD="trident"  
+#Replace trident with the base prefix from module 1
+BASE_PREFIX="trident"  
 
 #Replace with your details
 ORG_ID=<YOUR_ID>.altostrat.com                              
 ADMINISTRATOR_UPN_FQN=admin@$ORG_ID 
-PROJECT_ID=<YOUR_PROJET_ID>
-PROJECT_NBR=<YOUR_PROJET_NBR>
+PROJECT_ID=<YOUR_PROJECT_ID>
+PROJECT_NBR=<YOUR_PROJECT_NBR>
 
 BIGSPARK_CODE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$PROJECT_NBR-code
 BIGSPARK_STAGE_BUCKET=gs://$PROJECT_KEYWORD-bigspark-$PROJECT_NBR-stage
