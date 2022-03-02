@@ -23,6 +23,13 @@ Currently, the labs are very basic to get quick started on serverless Spark on G
 | 5 | [Serverless Spark in Vertex AI](05-s8s-vertex-ai.md) |
 | 6 | [Resources for Serverless Spark](https://spark.apache.org/docs/latest/) |
 
+### Get started
+
+Go to [Foundational setup in Argolis](01-foundational-setup.md)
+
+### Dont forget to 
+Shut down/delete resources as needed.
+
 ### Credits
 This is a community effort. Contributions are welcome.<br>
 
