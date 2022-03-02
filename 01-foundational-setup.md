@@ -25,7 +25,7 @@ YOUR_CIDR=xx.xxx.xx.xx/32
 #General variables
 LOCATION=us-central1
 
-UMSA="$UNIQUENESS_PREFIX-sa"
+UMSA="$BASE_PREFIX-sa"
 UMSA_FQN=$UMSA@$PROJECT_ID.iam.gserviceaccount.com
 
 
