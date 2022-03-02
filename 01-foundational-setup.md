@@ -25,21 +25,21 @@ YOUR_CIDR=xx.xxx.xx.xx/32
 #General variables
 LOCATION=us-central1
 
-UMSA="$PROJECT_KEYWORD-sa"
+UMSA="$UNIQUENESS_PREFIX-sa"
 UMSA_FQN=$UMSA@$PROJECT_ID.iam.gserviceaccount.com
 
 
-SPARK_SERVERLESS_NM=$PROJECT_KEYWORD-s8s
+SPARK_SERVERLESS_NM=$UNIQUENESS_PREFIX-s8s
 SPARK_SERVERLESS_BUCKET=gs://$SPARK_SERVERLESS_NM-$PROJECT_NBR
 
 PERSISTENT_HISTORY_SERVER_NM=$UNIQUENESS_PREFIX-sphs
 PERSISTENT_HISTORY_SERVER_BUCKET=gs://$PERSISTENT_HISTORY_SERVER_NM-$PROJECT_NBR
-DATAPROC_METASTORE_SERVICE_NM=$PROJECT_KEYWORD-dpms
+DATAPROC_METASTORE_SERVICE_NM=$UNIQUENESS_PREFIX-dpms
 
 VPC_PROJ_ID=$PROJECT_ID        
 VPC_PROJ_ID=$PROJECT_NBR  
 
-VPC_NM=$PROJECT_KEYWORD-vpc
+VPC_NM=$UNIQUENESS_PREFIX-vpc
 SPARK_SERVERLESS_SUBNET=$SPARK_SERVERLESS_NM-snet
 SPARK_CATCH_ALL_SUBNET=$UNIQUENESS_PREFIX-misc-snet
 ```
@@ -184,7 +184,7 @@ Paste these and run in cloud shell-
 ### 3.a. Create UMSA
 ```
 gcloud iam service-accounts create ${UMSA} \
-    --description="User Managed Service Account for the $PROJECT_KEYWORD Service Project" \
+    --description="User Managed Service Account for the $UNIQUENESS_PREFIX Service Project" \
     --display-name=$UMSA 
 ```
 ### 3.b. Grant IAM permissions for the UMSA
