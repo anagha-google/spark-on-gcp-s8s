@@ -7,7 +7,7 @@
 | 2 | [Dataproc Metastore Service](https://cloud.google.com/dataproc-metastore/docs) |
 | 3 | [Dataproc Persistent Spark History Server]() |
 | 4 | [Cloud Dataproc landing page](https://cloud.google.com/dataproc/docs) |
-| 5 | [Apache Spark]() |
+| 5 | [Apache Spark](https://spark.apache.org/docs/latest/) |
 
 ### Product - Product Management
 | Topic | Resource | 
