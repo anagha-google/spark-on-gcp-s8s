@@ -31,12 +31,12 @@ Go to [foundational setup in Argolis](01-foundational-setup.md)
 Shut down/delete resources as needed.
 
 ### Credits
-This is a community effort. Contributions are welcome.<br>
+This is a community effort by Google Cloud engineers. Contributions are welcome.<br>
 
 
 | # | Contributor | Contribution | About |
 | -- | :---    | :---| :---| 
-| 1 | Anagha Khanolkar | Author | Data Analytics Specialist Engineer, North America Technology Team, Google Cloud |
-| 2 | Jay O' Leary | Testing | Data Analytics Specialist Engineer, Sub-regional Technology Team (New England), Google Cloud |
+| 1 | Anagha Khanolkar | Author | Data Analytics Specialist Engineer, North America Technology Team |
+| 2 | Jay O' Leary | Testing | Data Analytics Specialist Engineer, Sub-regional Technology Team (New England)|
 
 
