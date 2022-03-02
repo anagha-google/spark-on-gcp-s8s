@@ -243,6 +243,12 @@ gcloud dataproc batches submit spark-sql \
 You should see it emit the record count in the output.
 
 <br><br>
+
+
 <hr>
 
-This concludes the module.
+[Next Module](04-s8s-dataplex.md) 
+<br>
+[Repo Landing Page](https://github.com/anagha-google/spark-on-gcp-s8s)
+
+<hr>
