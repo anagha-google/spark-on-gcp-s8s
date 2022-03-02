@@ -10,13 +10,13 @@ Modify as applicable for your environment and run the same in the cloud shell on
 
 ```
 #Choose an identifier to prefix to resource names provisioned for traceability and for uniqueness
-PROJECT_KEYWORD="trident"  
+UNIQUENESS_PREFIX="trident"  
 
 #Replace with your details
 ORG_ID=<YOUR_ID>.altostrat.com                              
-ORG_ID_NBR=<YOIR_ORG_ID_NBR>
+ORG_ID_NBR=<YOUR_ORG_ID_NBR>
 ADMINISTRATOR_UPN_FQN=admin@$ORG_ID 
-PROJECT_ID=<YOuR_PROJECT_ID>
+PROJECT_ID=<YOUR_PROJECT_ID>
 PROJECT_NBR=<YOUR_PROJECT_NUMBER>  
 
 #Your public IP address, to add to the firewall
@@ -32,7 +32,7 @@ UMSA_FQN=$UMSA@$PROJECT_ID.iam.gserviceaccount.com
 SPARK_SERVERLESS_NM=$PROJECT_KEYWORD-s8s
 SPARK_SERVERLESS_BUCKET=gs://$SPARK_SERVERLESS_NM-$PROJECT_NBR
 
-PERSISTENT_HISTORY_SERVER_NM=$PROJECT_KEYWORD-sphs
+PERSISTENT_HISTORY_SERVER_NM=$UNIQUENESS_PREFIX-sphs
 PERSISTENT_HISTORY_SERVER_BUCKET=gs://$PERSISTENT_HISTORY_SERVER_NM-$PROJECT_NBR
 DATAPROC_METASTORE_SERVICE_NM=$PROJECT_KEYWORD-dpms
 
@@ -41,7 +41,7 @@ VPC_PROJ_ID=$PROJECT_NBR
 
 VPC_NM=$PROJECT_KEYWORD-vpc
 SPARK_SERVERLESS_SUBNET=$SPARK_SERVERLESS_NM-snet
-SPARK_CATCH_ALL_SUBNET=$PROJECT_KEYWORD-misc-snet
+SPARK_CATCH_ALL_SUBNET=$UNIQUENESS_PREFIX-misc-snet
 ```
 <br><br>
 
@@ -435,7 +435,7 @@ Run the command below to provision-
 ```
 gcloud metastore services create $DATAPROC_METASTORE_SERVICE_NM \
     --location=$LOCATION \
-    --labels=used-by=all-$PROJECT_KEYWORD-clusters \
+    --labels=used-by=all-$UNIQUENESS_PREFIX-clusters \
     --network=$VPC_NM \
     --port=9083 \
     --tier=Developer \
