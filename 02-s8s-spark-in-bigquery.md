@@ -298,7 +298,7 @@ crimes_year:INTEGER,crimes_count:NUMERIC
 ```
 
 #### 5.b.2. Run the PySpark code below to persist the crimes count by year to BigQuery
-Edit the reference to the (a) table in the code below with your table with project and dataset prefix, and the storage stage bucket with yours and run-
+Edit the reference to the (a) table in the code below with your table with **project and dataset prefix**, and the storage stage bucket with yours and run-
 
 ```
 from pyspark.sql import SparkSession,DataFrameWriter
@@ -308,7 +308,7 @@ spark = SparkSession.builder \
   .getOrCreate()
 
 # Storage bucket for BigQuery connector to stage before persisting to BigQuery
-spark.conf.set('temporaryGcsBucket', "vajra-bigspark-481704770619-stage")
+spark.conf.set('temporaryGcsBucket', "<YOUR_PROJECT_ID>-stage")
 
 # Read data from BigQuery
 baseDF = spark.read \
