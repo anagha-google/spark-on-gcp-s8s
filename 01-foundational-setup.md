@@ -445,5 +445,7 @@ gcloud metastore services create $DATAPROC_METASTORE_SERVICE_NM \
 <br><br>
 
 <hr>
-
-This concludes the module. [Next module->](02-s8s-spark-in-bigquery.md)
+This concludes the module. <br>
+[Next Module->](02-s8s-spark-in-bigquery.md)
+[Repo Landing Page](https://github.com/anagha-google/spark-on-gcp-s8s)
+<hr>
