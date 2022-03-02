@@ -8,6 +8,16 @@ Lets get started...
 
 Completion of the [foundational setup module](foundational-setup.md).
 
+## Documentation resources
+
+| Topic | Resource | 
+| -- | :--- |
+| 1 | [Serverless Spark powered by Dataproc](https://cloud.google.com/dataproc-serverless/docs)| 
+| 2 | [Dataproc Metastore Service](https://cloud.google.com/dataproc-metastore/docs) |
+| 3 | [Dataproc Persistent Spark History Server]() |
+| 4 | [Cloud Dataproc landing page](https://cloud.google.com/dataproc/docs) |
+| 5 | [Apache Spark](https://spark.apache.org/docs/latest/) |
+
 ## 1. Variables
 
 Modify the varibles below as applicable for your environment and run the same in the cloud shell on the cloud console-
@@ -239,6 +249,12 @@ gcloud dataproc batches submit spark-sql \
 You should see it emit the record count in the output.
 
 <br><br>
+
+## 5. Submit a query against the external table
+
+If you are thinking...
+```that was too basic. What if I need specific dependencies from PyPi/Maven/CRAN, how do I control resources...I have a lot of questions..```
+Be sure to read the documentation [here](https://cloud.google.com/dataproc-serverless/docs).
 
 
 <hr>
