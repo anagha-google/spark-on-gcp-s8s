@@ -25,7 +25,7 @@ Currently, the labs are very basic to get quick started on serverless Spark on G
 
 ### Get started
 
-Go to [Foundational setup in Argolis](01-foundational-setup.md)
+Go to [foundational setup in Argolis](01-foundational-setup.md)
 
 ### Dont forget to 
 Shut down/delete resources as needed.
