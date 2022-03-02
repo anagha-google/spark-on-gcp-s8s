@@ -2,6 +2,16 @@
 
 This module covers fundamentals of running serverless Spark on GCP from the BigQuery UI through a practical and basic set of examples to get you quick-started. 
 
+## Documentation resources
+
+| Topic | Resource | 
+| -- | :--- |
+| 1 | [Serverless Spark powered by Dataproc](https://cloud.google.com/dataproc-serverless/docs)| 
+| 2 | [Dataproc Metastore Service](https://cloud.google.com/dataproc-metastore/docs) |
+| 3 | [Dataproc Persistent Spark History Server]() |
+| 4 | [Cloud Dataproc landing page](https://cloud.google.com/dataproc/docs) |
+| 5 | [Apache Spark](https://spark.apache.org/docs/latest/) |
+
 ## 1. Pre-requisites
 
 a) The Spark on BigQuery feature, currently (Feb/March 2022) needs enabling for Argolis. Submit a request [here](https://docs.google.com/forms/d/e/1FAIpQLSccIXlE5gJNE0dNs6vQvCfrCcSjnoHqaW2lxpoVkAh56KLOwA/viewform) with your Argolis user principal name - admin@\<your-org-name\> ... example admin@\<your-ldap\>.altostrat.com. <br>
