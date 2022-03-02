@@ -1,6 +1,6 @@
 # About
 
-This module covers the foundational setup required for serverless Apache Spark.
+This module covers the foundational setup required for serverless Apache Spark powered by Cloud Dataproc.
 
 
 ## 1.0. Variables
