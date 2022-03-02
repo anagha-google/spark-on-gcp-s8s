@@ -308,7 +308,7 @@ spark = SparkSession.builder \
   .getOrCreate()
 
 # Storage bucket for BigQuery connector to stage before persisting to BigQuery
-spark.conf.set('temporaryGcsBucket', "<your-PROJECT_KEYWORD>-bigspark-<your-PROJECT_NBR>-stage")
+spark.conf.set('temporaryGcsBucket', "<your-BASE_PREFIX>-bigspark-<your-PROJECT_NBR>-stage")
 
 # Read data from BigQuery
 baseDF = spark.read \
