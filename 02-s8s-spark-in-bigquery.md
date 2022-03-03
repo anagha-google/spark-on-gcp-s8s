@@ -283,9 +283,7 @@ Here is the output in the GUI-
 
 ### 5.b. Lets modify the above to write to a BQ table
 
-Lets write this dataframe to a table-
-```
-# Crimes count by year
+Lets write this dataframe to a table-<br>
 crimesByYearDF=spark.sql("SELECT year,count(*) AS crime_count FROM chicago_crimes GROUP BY year ORDER BY year;")
 ```
 
