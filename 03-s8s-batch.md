@@ -14,7 +14,7 @@ Completion of the [foundational setup module](foundational-setup.md).
 | -- | :--- |
 | 1 | [Serverless Spark powered by Dataproc](https://cloud.google.com/dataproc-serverless/docs)| 
 | 2 | [Dataproc Metastore Service](https://cloud.google.com/dataproc-metastore/docs) |
-| 3 | [Dataproc Persistent Spark History Server]() |
+| 3 | [Dataproc Persistent Spark History Server](https://cloud.google.com/dataproc/docs/concepts/jobs/history-server) |
 | 4 | [Cloud Dataproc landing page](https://cloud.google.com/dataproc/docs) |
 | 5 | [Apache Spark](https://spark.apache.org/docs/latest/) |
 
