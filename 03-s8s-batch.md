@@ -97,7 +97,7 @@ Lets navigate in Cloud Console to the Dataproc service and go to "Serverless" an
 
 ## 3. Run a simple batch job (SparkPi) with Persistent Spark History Server
 
-Lets repeat the same job, this time with the persistent history server we created in the [foundational setup module](foundational-setup.md).<br>
+The Serverless Spark job logs are available for 24 hours only. For longevity, consider creating a Persistent Spark History Server, which is essentially a single node Dataproc cluster. <br><br>Lets repeat the same job, this time with the persistent history server we created in the [foundational setup module](foundational-setup.md).<br>
 All we need to do is add the following to the command-
 ```
 --history-server-cluster=projects/$PROJECT_ID/regions/$LOCATION/clusters/$PERSISTENT_HISTORY_SERVER_NM
