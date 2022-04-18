@@ -429,7 +429,7 @@ Run the command below to provision-
 gcloud dataproc clusters create $PERSISTENT_HISTORY_SERVER_NM \
     --single-node \
     --region=$LOCATION \
-    --image-version=1.4-debian10 \
+    --image-version=2.0 \
     --enable-component-gateway \
     --properties="dataproc:job.history.to-gcs.enabled=true,spark:spark.history.fs.logDirectory=$PERSISTENT_HISTORY_SERVER_BUCKET/*/spark-job-history,mapred:mapreduce.jobhistory.read-only.dir-pattern=$PERSISTENT_HISTORY_SERVER_BUCKET/*/mapreduce-job-history/done" \
     --service-account=$UMSA_FQN \
