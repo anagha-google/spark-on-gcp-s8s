@@ -250,7 +250,7 @@ You should see it emit the record count in the output.
 
 <br><br>
 
-## 5. Submit a query against the external table
+## 5. What about dependencies?
 
 If you are thinking...
 ```that was too basic. What if I need specific dependencies from PyPi/Maven/CRAN, how do I control resources...I have a lot of questions..```
