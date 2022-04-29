@@ -31,11 +31,9 @@ BASE_PREFIX="trident"
 ORG_ID=<YOUR_ID>.altostrat.com                              
 ORG_ID_NBR=<YOUR_ORG_ID_NBR>
 ADMINISTRATOR_UPN_FQN=admin@$ORG_ID 
+YOUR_CIDR=xx.xxx.xx.xx/32
 PROJECT_ID=<YOUR_PROJECT_ID>
 PROJECT_NBR=<YOUR_PROJECT_NUMBER>  
-
-#Your public IP address, to add to the firewall
-YOUR_CIDR=xx.xxx.xx.xx/32
 
 #General variables
 LOCATION=us-central1
