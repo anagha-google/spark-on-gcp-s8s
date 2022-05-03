@@ -6,11 +6,11 @@ This module covers the foundational setup required in Argolis, for serverless Ap
 
 #### 1. Create a project manually<br>
 Note the project number and project ID. <br>
-We will need this for the rest fo the lab.<br>|
+We will need this for the rest fo the lab.<br>
 
 #### 2. Grant yourself the security admin role<br>
 This is needed for the networking setup.<br>
-Go to Cloud IAM and through the UI, grant yourself security admin role.
+Go to Cloud IAM and through the UI, grant yourself the security admin role.
 
 #### 3. Grant yourself Organization Policy Administrator at an Organization level<br>
 This is needed to set project level policies<br>
