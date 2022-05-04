@@ -1,6 +1,6 @@
 # Serverless Spark on GCP
 
-This repository contains a hands on lab with multiple modules and covers serverless Spark on GCP powered by Dataproc. 
+This repository contains a hands on lab with multiple modules and covers serverless Spark on GCP powered by Cloud Dataproc. 
 
 ### Audience
 The intended audience is Google Customer Engineers but anyone with access to GCP can try the lab modules just as well.
