@@ -9,7 +9,7 @@ The intended audience is Google Customer Engineers but anyone with access to GCP
 The lab covers setup in **Argolis**, therefore Argolis enablement is prerequisite
 
 ### Goal
-(a) Just enough knowledge of serverless Spark on GCP powered by Dataproc to field customer conversations & questions, (b) completed setup in Argolis for serverless Spark, (c) basic/quickstart demos and knowledge of how to run them and (d) knowledge of resources for serverless Spark on GCP.
+(a) Just enough knowledge of serverless Spark on GCP powered by Cloud Dataproc to field customer conversations & questions, (b) completed setup in Argolis for serverless Spark, (c) basic/quickstart demos and knowledge of how to run them and (d) knowledge of resources for serverless Spark on GCP.
 
 ### What is covered?
 Currently, the labs are very basic to get quick started on serverless Spark on GCP. More advanced labs will be added eventually.
